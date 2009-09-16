@@ -1,2 +1,0 @@
-C:\Documents and Settings\Breno\Meus documentos\Faculdade\ES2\Xadrez\WindowsGame1\WindowsGame1\Content\obj\x86\Debug\ResolveAssemblyReference.cache
-C:\Documents and Settings\Breno\Meus documentos\Faculdade\ES2\Xadrez\Xadrez\Xadrez\Content\obj\x86\Debug\ResolveAssemblyReference.cache
