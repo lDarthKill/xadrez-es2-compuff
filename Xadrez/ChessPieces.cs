@@ -8,7 +8,7 @@ using ConstTypes;
 
 namespace Xadrez
 {
-    public class ChessPieces
+    public class Piece
     {
         bool bAlive;
         bool bBlack;
@@ -18,8 +18,15 @@ namespace Xadrez
 
         Table_Position position;
 
-        public ChessPieces()
+        public Piece(bool bBlack)
         {
+            this.bBlack = bBlack;
+        }
+
+        public Piece(int posX, int posY, bool bBlack)
+        {
+            SetPosition(posX, posY);
+            this.bBlack = bBlack;
         }
 
         public Table_Position GetPosition()
@@ -41,6 +48,16 @@ namespace Xadrez
         public void SetAlive(bool _bAlive)
         {
             bAlive = _bAlive;
+        }
+
+        public bool IsBlack()
+        {
+            return bBlack;
+        }
+
+        public void SetBlack(bool bBlack)
+        {
+            this.bBlack = bBlack;
         }
 
 /*        public static void SetSelfImageBlack(Texture2D _texture)

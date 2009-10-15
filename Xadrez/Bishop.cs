@@ -7,14 +7,13 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Xadrez
 {
-    class Bishop : Xadrez.ChessPieces
+    class Bishop : Xadrez.Piece
     {
         static Texture2D selfImageBlack;
         static Texture2D selfImageWhite;
 
-        public Bishop(int _posX, int _posY)
+        public Bishop(int _posX, int _posY, bool bBlack) : base(_posX, _posY, bBlack)
         {
-            SetPosition(_posX, _posY);
         }
 
         public
