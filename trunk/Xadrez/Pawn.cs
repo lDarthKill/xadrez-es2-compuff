@@ -11,6 +11,11 @@ namespace Xadrez
 {
     public class Pawn : Xadrez.Piece
     {
+        public class PawnMovement : Movement_
+        {
+
+        }
+
         static Texture2D selfImageBlack;
         static Texture2D selfImageWhite;
 

@@ -88,6 +88,7 @@
     <Compile Include="ConstTypes.cs" />
     <Compile Include="King.cs" />
     <Compile Include="Knight.cs" />
+    <Compile Include="MiniMax.cs" />
     <Compile Include="Pawn.cs" />
     <Compile Include="Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
