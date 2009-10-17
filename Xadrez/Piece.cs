@@ -10,17 +10,23 @@ namespace Xadrez
 {
     public class Piece
     {
-        bool m_bAlive;
-        bool m_bBlack;
+        public class Movement_
+        {
+            // 2do
+        }
+
+        bool        m_bAlive;
+        bool        m_bBlack;
+        Point       m_position;
+        Movement_   m_movement;
         
 //        static Texture2D selfImageBlack;
 //        static Texture2D selfImageWhite;
 
-        Point m_position = new Point(-1, -1);
-
         public Piece(bool bBlack)
         {
             this.m_bBlack = bBlack;
+            m_position = new Point();
         }
 
         public Piece(int posX, int posY, bool bBlack)
@@ -38,6 +44,12 @@ namespace Xadrez
         {
             m_position.X = _posX;
             m_position.Y = _posY;
+        }
+
+        public Movement_ Movement
+        {
+            get { return m_movement; }
+            // Tácio - Doesn`t need a "set" accessor, the movement of a piece is immutable.
         }
 
         public bool IsAlive()

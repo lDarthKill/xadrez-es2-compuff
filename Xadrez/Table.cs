@@ -123,6 +123,23 @@ namespace Xadrez
             }
         }
 
+        public void getPossibleMovement(Point pt)
+        {
+            Piece piece = getPiece(pt);
+            if (piece == null)
+                return;
+
+            Piece.Movement_ movement = piece.Movement;
+        }
+
+        private Piece getPiece(Point pt)
+        {
+            if (!isPtInTable(pt))
+                return null;
+
+            return m_table[pt.Y, pt.X].Piece;
+        }
+
         public bool
         move(Point ptOld, Point ptNew)
         {
