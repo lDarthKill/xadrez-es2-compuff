@@ -10,54 +10,54 @@ namespace Xadrez
 {
     public class Piece
     {
-        bool bAlive;
-        bool bBlack;
+        bool m_bAlive;
+        bool m_bBlack;
         
 //        static Texture2D selfImageBlack;
 //        static Texture2D selfImageWhite;
 
-        Table_Position position;
+        Point m_position = new Point(-1, -1);
 
         public Piece(bool bBlack)
         {
-            this.bBlack = bBlack;
+            this.m_bBlack = bBlack;
         }
 
         public Piece(int posX, int posY, bool bBlack)
         {
             SetPosition(posX, posY);
-            this.bBlack = bBlack;
+            this.m_bBlack = bBlack;
         }
 
-        public Table_Position GetPosition()
+        public Point getPosition()
         {
-            return position;            
+            return m_position;
         }
 
         public void SetPosition(int _posX, int _posY)
         {
-            position.X = _posX;
-            position.Y = _posY;
+            m_position.X = _posX;
+            m_position.Y = _posY;
         }
 
         public bool IsAlive()
         {
-            return bAlive;
+            return m_bAlive;
         }
 
         public void SetAlive(bool _bAlive)
         {
-            bAlive = _bAlive;
+            m_bAlive = _bAlive;
         }
 
         public bool IsBlack()
         {
-            return bBlack;
+            return m_bBlack;
         }
 
         public void SetBlack(bool bBlack)
         {
-            this.bBlack = bBlack;
+            this.m_bBlack = bBlack;
         }
 
 /*        public static void SetSelfImageBlack(Texture2D _texture)

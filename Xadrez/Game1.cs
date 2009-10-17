@@ -18,17 +18,17 @@ namespace Xadrez
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager graphics;
+        GraphicsDeviceManager m_graphics;
 
-        SpriteBatch spriteBatch;
+        SpriteBatch m_spriteBatch;
 
-        public Rectangle rectTable;
+        public Rectangle m_rectTable;
 
-        Table gameTable;
+        Table m_gameTable;
 
         public Game1()
         {
-            graphics = new GraphicsDeviceManager(this);
+            m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
         }
 
@@ -44,34 +44,34 @@ namespace Xadrez
 
             base.Initialize();
 
-            rectTable.X = 0;
-            rectTable.Y = 0;
-            rectTable.Width = 640;
-            rectTable.Height = 640;
+            m_rectTable.X = 0;
+            m_rectTable.Y = 0;
+            m_rectTable.Width = 640;
+            m_rectTable.Height = 640;
 
-            graphics.PreferredBackBufferHeight = 640;
-            graphics.PreferredBackBufferWidth = 640;
-            graphics.ApplyChanges();
+            m_graphics.PreferredBackBufferHeight = 640;
+            m_graphics.PreferredBackBufferWidth = 640;
+            m_graphics.ApplyChanges();
 
            
             //Loading table
-            Table.SetSelfImage(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
+            Table.SetSelfImage(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
 
             //Loading white pieces
-            Pawn.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png"));
-            Knight.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white knight.png"));
-            Bishop.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png"));
-            Rook.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white rook.png"));
-            King.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white king.png"));
-            Queen.SetSelfImageWhite(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/white queen.png"));
+            Pawn.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png"));
+            Knight.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png"));
+            Bishop.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png"));
+            Rook.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png"));
+            King.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png"));
+            Queen.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png"));
 
             //Loading black pieces
-            Pawn.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black pawn.png"));
-            Knight.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black knight.png"));
-            Bishop.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black bishop.png"));
-            Rook.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black rook.png"));
-            King.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black king.png"));
-            Queen.SetSelfImageBlack(Texture2D.FromFile(graphics.GraphicsDevice, "../../../Content/Textures/black queen.png"));
+            Pawn.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black pawn.png"));
+            Knight.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black knight.png"));
+            Bishop.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black bishop.png"));
+            Rook.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black rook.png"));
+            King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black king.png"));
+            Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black queen.png"));
 
         }
 
@@ -82,7 +82,7 @@ namespace Xadrez
         protected override void LoadContent()
         {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
+            m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -120,11 +120,11 @@ namespace Xadrez
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin();
+            m_spriteBatch.Begin();
 
-            spriteBatch.Draw(Table.GetSelfImage(), rectTable, Color.Beige);
+            m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
 
-            spriteBatch.End();
+            m_spriteBatch.End();
 
             base.Draw(gameTime);
         }
