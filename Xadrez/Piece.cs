@@ -10,15 +10,15 @@ namespace Xadrez
 {
     public class Piece
     {
-        public class Movement_
+        public class PieceMovement
         {
-            // 2do
+            // 2do - How to describe movement rules?
         }
 
-        bool        m_bAlive;
-        bool        m_bBlack;
-        Point       m_position;
-        Movement_   m_movement;
+        private     bool            m_bAlive;
+        private     bool            m_bBlack;
+        private     Point           m_position;
+        protected   PieceMovement   m_movement;
         
 //        static Texture2D selfImageBlack;
 //        static Texture2D selfImageWhite;
@@ -46,7 +46,7 @@ namespace Xadrez
             m_position.Y = _posY;
         }
 
-        public Movement_ Movement
+        public PieceMovement Movement
         {
             get { return m_movement; }
             // Tácio - Doesn`t need a "set" accessor, the movement of a piece is immutable.

@@ -11,16 +11,12 @@ namespace Xadrez
 {
     public class Pawn : Xadrez.Piece
     {
-        public class PawnMovement : Movement_
-        {
-
-        }
-
         static Texture2D selfImageBlack;
         static Texture2D selfImageWhite;
 
         public Pawn(int _posX, int _posY, bool bBlack) : base(_posX, _posY, bBlack)
         {
+            m_movement = new PieceMovement();
         }
 
 
