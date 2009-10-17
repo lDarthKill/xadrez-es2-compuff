@@ -14,6 +14,7 @@ namespace Xadrez
 
         public Bishop(int _posX, int _posY, bool bBlack) : base(_posX, _posY, bBlack)
         {
+            m_movement = new PieceMovement();
         }
 
         public

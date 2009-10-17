@@ -129,7 +129,7 @@ namespace Xadrez
             if (piece == null)
                 return;
 
-            Piece.Movement_ movement = piece.Movement;
+            Piece.PieceMovement movement = piece.Movement;
         }
 
         private Piece getPiece(Point pt)
