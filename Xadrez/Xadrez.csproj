@@ -85,11 +85,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bishop.cs" />
-    <Compile Include="ChessPieces.cs" />
     <Compile Include="ConstTypes.cs" />
     <Compile Include="King.cs" />
     <Compile Include="Knight.cs" />
     <Compile Include="Pawn.cs" />
+    <Compile Include="Piece.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Game1.cs" />
