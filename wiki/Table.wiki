@@ -1,0 +1,47 @@
+=Descrição da classe Table=
+
+Namespace: Xadrez
+
+
+ ==Membros==
+
+  TABLE_SIZE - tamanho do lado do tabuleiro = 8.
+
+  m_selfImage - Imagem do tabuleiro a ser exibida na interface.
+
+  m_table - Matriz quadrada de tamanho TABLE_SIZE, de casas.
+
+  m_vecDeadBlackPieces - vetor com as peças pretas mortas.
+
+  m_vecDeadWhitePieces - vetor com as peças brancas mortas.
+  
+
+
+ ==Métodos==
+
+  Table() - 
+
+  initTable() - 
+
+  getPossibleMovement() - 
+
+  getPiece() - 
+
+  move() - 
+
+  isPtInTable() - 
+
+  isInCheckMate() - 
+
+  
+  setSelfImage() - 
+
+  getSelfImage() - 
+
+
+
+==Operadores==
+
+  operator (+) -> 
+
+  operator (-) -> 
