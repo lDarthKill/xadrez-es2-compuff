@@ -129,7 +129,7 @@ namespace Xadrez
             if (piece == null)
                 return;
 
-            Piece.PieceMovement movement = piece.Movement;
+            PieceMovement movement = piece.Movement;
         }
 
         private Piece getPiece(Point pt)
@@ -140,8 +140,7 @@ namespace Xadrez
             return m_table[pt.Y, pt.X].Piece;
         }
 
-        public bool
-        move(Point ptOld, Point ptNew)
+        public bool move(Point ptOld, Point ptNew)
         {
             if (!isPtInTable(ptOld))
                 return false;
@@ -179,8 +178,7 @@ namespace Xadrez
             return true;
         }
 
-        private bool
-        isPtInTable(Point pt)
+        private bool isPtInTable(Point pt)
         {
             if (pt.X <= 0 || pt.X >= TABLE_SIZE)
                 return false;
@@ -188,6 +186,23 @@ namespace Xadrez
                 return false;
 
             return true;
+        }
+
+        public bool IsInCheckMate(bool m_bBlack)
+        {
+            throw new NotImplementedException();
+        }
+
+        static public Table operator +(Table table, Play play)
+        {
+            // 2do - returns a copy of the old table modified with the play.
+            throw new NotImplementedException();
+        }
+
+        static public Play operator -(Table newTable, Table oldTable)
+        {
+            // 2do - return the play that represents the difference between these 2 tables.
+            throw new NotImplementedException();
         }
 
         static public 
