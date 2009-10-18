@@ -10,11 +10,6 @@ namespace Xadrez
 {
     public class Piece
     {
-        public class PieceMovement
-        {
-            // 2do - How to describe movement rules?
-        }
-
         private     bool            m_bAlive;
         private     bool            m_bBlack;
         private     Point           m_position;
