@@ -22,4 +22,4 @@
 
 *Namespace: ConstTypes
 
- * ~~Table_Position~~
+ * ~~{{{Table_Position}}}~~ - Não estou usando mais por já ter uma opção idêntica no framework .Net, a classe {{{Point}}}.
