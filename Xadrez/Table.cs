@@ -16,40 +16,53 @@ namespace Xadrez
 		const int TABLE_SIZE = 8;
 
 	
-		private class TableSquare // Squares of a table. Can hold a piece (or not).
+		public class TableSquare // Squares of a table. Can hold a piece (or not).
         {
             // Private members
-			private Piece m_piece;// = null;
-			private Vector2 m_v2BoundingBox;
+			private Piece m_piece;
+			private Rectangle m_rBoundingBox;
 
 			
 			// Constructors
 			public
 			TableSquare( )
 			{
-				//m_piece = null;
-				//m_v2BoundingBox = null;
+
 			}
 
 			public
-			TableSquare( Piece _piece, Vector2 _boundingBox )
+			TableSquare( Piece _piece, Rectangle _boundingBox )
 			{
 				m_piece = _piece;
-				m_v2BoundingBox = _boundingBox;
+				m_rBoundingBox = _boundingBox;
 			}
 
 
             // Access methods
 			public Piece Piece
 			{
-				get { return this.m_piece; }
-				set { this.m_piece = value; }
+				get
+				{
+					return this.m_piece;
+				}
+
+				set
+				{
+					this.m_piece = value;
+				}
 			}
 
-			public Vector2 BoundingBox
+			public Rectangle BoundingBox
 			{
-				get { return this.m_v2BoundingBox; }
-				set { this.m_v2BoundingBox = value; }
+				get
+				{
+					return this.m_rBoundingBox;
+				}
+
+				set
+				{
+					this.m_rBoundingBox = value;
+				}
 			}
 
 			//public bool hasPiece( )
@@ -58,16 +71,16 @@ namespace Xadrez
 			//}
         }
 
-        static Texture2D        m_selfImage;
-        private TableSquare[,]  m_table;
-        private List<Piece>     m_vecDeadBlackPieces;
-        private List<Piece>     m_vecDeadWhitePieces;
+        static private Texture2D  m_selfImage;
+        private TableSquare[ , ]  m_table;
+		private List< Piece >     m_vecDeadBlackPieces;
+        private List< Piece >     m_vecDeadWhitePieces;
 
 		public Table( )
 		{
-            m_table = new TableSquare[TABLE_SIZE, TABLE_SIZE];
-            m_vecDeadBlackPieces = new List<Piece>();
-            m_vecDeadWhitePieces = new List<Piece>();
+			m_table = new TableSquare[ TABLE_SIZE, TABLE_SIZE ];
+            m_vecDeadBlackPieces = new List<Piece>( );
+            m_vecDeadWhitePieces = new List<Piece>( );
 
 			initTable( );
         }
@@ -79,40 +92,40 @@ namespace Xadrez
 			int nRow = 0;
 			int nCol = 0;
             Piece piece;
-			Vector2 boundingBox;
+			Rectangle boundingBox;
 
             // Team pieces.
             // First row - Black - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
 			piece = new Rook( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
             m_table[nRow, nCol] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Knight( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Bishop( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Queen( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new King( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Bishop( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Knight( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Rook( nRow, nCol, BLACK );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 
             // Second row - Black - Pawns
@@ -120,7 +133,7 @@ namespace Xadrez
             for (nCol = 0; nCol < TABLE_SIZE; ++nCol)
             {
 				piece = new Pawn( nRow, nCol, BLACK );
-				boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             }
 
@@ -130,7 +143,7 @@ namespace Xadrez
 			{
 				for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
 				{
-					boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+					boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 					m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 				}
 			}
@@ -139,45 +152,45 @@ namespace Xadrez
 			for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
 			{
 				piece = new Pawn( nRow, nCol, WHITE );
-				boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 			}
 
-			//nRow = TABLE_SIZE-1;
+			nRow++;
 			nCol = 0;
 			//bBlack = !bBlack;
 
 			// Last row - White - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
 			piece = new Rook( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Knight( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Bishop( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Queen( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new King( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Bishop( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Knight( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
 			piece = new Rook( nRow, nCol, WHITE );
-			boundingBox = new Vector2( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 70 ) ) );
+			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 
         }
