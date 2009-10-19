@@ -2,23 +2,23 @@
 
 ==Namespace: Xadrez==
 
- * Program
- * Game1
- * Table
- * Table.TableSquare
- * Play
- * Piece
- * PieceMovement
- * Pawn
- * Rook
- * Knight
- * Bishop
- * King
- * Queen
+ * [Program]
+ * [Game1]
+ * [Table]
+ * Table.[TableSquare]
+ * [Play]
+ * [Piece]
+ * [PieceMovement]
+ * [Pawn]
+ * [Rook]
+ * [Knight]
+ * [Bishop]
+ * [King]
+ * [Queen]
 
 *Namespace: IA*
 
- * MiniMax
+ * [MiniMax]
 
 *Namespace: ConstTypes
 
