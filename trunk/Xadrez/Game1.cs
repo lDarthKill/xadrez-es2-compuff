@@ -30,6 +30,7 @@ namespace Xadrez
         {
             m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+			IsMouseVisible = true;
         }
 
         /// <summary>
