@@ -3,7 +3,7 @@
 Namespace: Xadrez
 
  ==Inner class==
-  {{{TableSquare}}} - Representa as casas do tabuleiro.
+  [TableSquare] - Representa as casas do tabuleiro.
 
  ==Membros==
 
