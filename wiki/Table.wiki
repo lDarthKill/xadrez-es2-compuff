@@ -2,6 +2,8 @@
 
 Namespace: Xadrez
 
+ ==Inner class==
+  {{{TableSquare}}} - Representa as casas do tabuleiro.
 
  ==Membros==
 
@@ -9,7 +11,7 @@ Namespace: Xadrez
 
   {{{m_selfImage}}} - Imagem do tabuleiro a ser exibida na interface.
 
-  {{{m_table}}} - Matriz quadrada de tamanho TABLE_SIZE, de casas (TableSquare).
+  {{{m_table}}} - Matriz quadrada de tamanho {{{TABLE_SIZE}}}, de casas ({{{TableSquare}}}).
 
   {{{m_vecDeadBlackPieces}}} - vetor com as peças pretas mortas.
 
@@ -21,7 +23,7 @@ Namespace: Xadrez
 
   {{{Table()}}} - Construtor da classe.
 
-  {{{initTable(bool bBlack)}}} - Criação e distribuição das peças no tabuleiro. Cada peça fica em uma casa específica (TableSquare). O parâmetro bBlack informa se as peças pretas ficarão embaixo.
+  {{{initTable(bool bBlack)}}} - Criação e distribuição das peças no tabuleiro. Cada peça fica em uma casa específica ({{{TableSquare}}}). O parâmetro bBlack informa se as peças pretas ficarão embaixo.
 
   {{{getPossibleMovement(Point pt)}}} - Retorna os possíveis movimentos da peça que está na posição {{{pt}}}. O parâmetro {{{pt}}} informa uma posição do tabuleiro (0 até {{{TABLE_SIZE-1}}}). Método público, pode ser usado pela interface para iluminar as casas disponíveis para o usuário.
 
