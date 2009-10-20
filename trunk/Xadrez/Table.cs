@@ -65,10 +65,10 @@ namespace Xadrez
 				}
 			}
 
-			//public bool hasPiece( )
-			//{
-			//    return (m_piece != null);
-			//}
+			public bool hasPiece( )
+			{
+			    return (m_piece != null);
+			}
         }
 
         static private Texture2D  m_selfImage;
@@ -195,14 +195,14 @@ namespace Xadrez
 
         }
 
-		//public void getPossibleMovement(Point pt)
-		//{
-		//    Piece piece = getPiece(pt);
-		//    if (piece == null)
-		//        return;
+		public void getPossibleMovement(Point pt)
+		{
+		    Piece piece = getPiece(pt);
+		    if (piece == null)
+		        return;
 
-		//    PieceMovement movement = piece.Movement;
-		//}
+		    PieceMovement movement = piece.Movement;
+		}
 
         private Piece getPiece(Point pt)
         {
@@ -212,43 +212,43 @@ namespace Xadrez
             return m_table[pt.Y, pt.X].Piece;
         }
 
-		//public bool move(Point ptOld, Point ptNew)
-		//{
-		//    if (!isPtInTable(ptOld))
-		//        return false;
+        public bool move(Play play)
+        {
+            if (!isPtInTable(play.oldPosition))
+                return false;
 
-		//    if (!isPtInTable(ptNew))
-		//        return false;
+            if (!isPtInTable(play.newPosition))
+                return false;
 
-		//    TableSquare oldSquare = m_table[ptOld.Y, ptOld.X];
-		//    TableSquare newSquare = m_table[ptNew.Y, ptNew.X];
-		//    Piece   pieceEaten = null;
+            TableSquare oldSquare = m_table[play.oldPosition.Y, play.oldPosition.X];
+            TableSquare newSquare = m_table[play.newPosition.Y, play.newPosition.X];
+            Piece   pieceEaten = null;
 
-		//    // Verify if the piece can move and which are the consequences.
-		//    if (newSquare.hasPiece())
-		//    {
-		//        bool bBlack = oldSquare.Piece.IsBlack();
-		//        if (newSquare.Piece.IsBlack() != bBlack)
-		//            pieceEaten = newSquare.Piece; // Ate a piece of the other team.
-		//        else
-		//            return false; // Trying to move to a square with piece of the same team.
-		//    }
+		    // Verify if the piece can move and which are the consequences.
+		    if (newSquare.hasPiece())
+		    {
+		        bool bBlack = oldSquare.Piece.IsBlack();
+		        if (newSquare.Piece.IsBlack() != bBlack)
+		            pieceEaten = newSquare.Piece; // Ate a piece of the other team.
+		        else
+		            return false; // Trying to move to a square with piece of the same team.
+		    }
 
-		//    // Move the piece.
-		//    m_table[ptNew.Y, ptNew.X].Piece = oldSquare.Piece;
-		//    m_table[ptOld.Y, ptOld.X].Piece = null;
+            // Move the piece.
+            m_table[play.newPosition.Y, play.newPosition.X].Piece = oldSquare.Piece;
+            m_table[play.oldPosition.Y, play.oldPosition.X].Piece = null;
 
-		//    if (!pieceEaten.Equals(null))
-		//    {
-		//        // Hold the eaten piece for later count or something.
-		//        if (pieceEaten.IsBlack())
-		//            m_vecDeadBlackPieces.Add(pieceEaten);
-		//        else
-		//            m_vecDeadWhitePieces.Add(pieceEaten);
-		//    }
+		    if (!pieceEaten.Equals(null))
+		    {
+		        // Hold the eaten piece for later count or something.
+		        if (pieceEaten.IsBlack())
+		            m_vecDeadBlackPieces.Add(pieceEaten);
+		        else
+		            m_vecDeadWhitePieces.Add(pieceEaten);
+		    }
 
-		//    return true;
-		//}
+		    return true;
+		}
 
         private bool isPtInTable(Point pt)
         {
@@ -260,22 +260,22 @@ namespace Xadrez
             return true;
         }
 
-        public bool IsInCheckMate(bool m_bBlack)
+        public bool IsInCheckMate(bool bBlack)
         {
             throw new NotImplementedException();
         }
 
-		//static public Table operator +(Table table, Play play)
-		//{
-		//    // 2do - returns a copy of the old table modified with the play.
-		//    throw new NotImplementedException();
-		//}
+		static public Table operator +(Table table, Play play)
+		{
+		    // 2do - returns a copy of the old table modified with the play.
+		    throw new NotImplementedException();
+		}
 
-		//static public Play operator -(Table newTable, Table oldTable)
-		//{
-		//    // 2do - return the play that represents the difference between these 2 tables.
-		//    throw new NotImplementedException();
-		//}
+		static public Play operator -(Table newTable, Table oldTable)
+		{
+		    // 2do - return the play that represents the difference between these 2 tables.
+		    throw new NotImplementedException();
+		}
 
         static public 
         void SetSelfImage(Texture2D _texture)
