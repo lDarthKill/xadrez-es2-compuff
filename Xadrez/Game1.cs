@@ -24,9 +24,12 @@ namespace Xadrez
 
         public Rectangle m_rectTable;
 
-        Rectangle rectSelection;
-        bool bPieceSelected;
-        Texture2D maskSelection;
+        Rectangle m_rectSelection;
+        bool m_bPieceSelected;
+        Texture2D m_maskSelection;
+//        private List<Rectangle> m_;
+
+
 
         Table m_gameTable;
 
@@ -60,7 +63,7 @@ namespace Xadrez
 
             m_gameTable = new Table();
 
-            bPieceSelected = false;
+            m_bPieceSelected = false;
 
         }
 
@@ -92,7 +95,7 @@ namespace Xadrez
             King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png"));
             Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png"));
 
-            maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection.png");
+            m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection.png");
             // TODO: use this.Content to load your game content here
         }
 
@@ -127,7 +130,7 @@ namespace Xadrez
                 rectMouse.Height = 1;
 
 
-                bPieceSelected = false;
+                m_bPieceSelected = false;
 
                 for (int line = 0; line <= 7; line++)
                 {
@@ -135,9 +138,15 @@ namespace Xadrez
                     {
                         if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
                         {
-                            bPieceSelected = true;
-                            rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox;
+                            m_bPieceSelected = true;
+                            m_rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox;
 
+                            //test for pawns. It´s not the final code.
+ /*                           if (m_gameTable.getTableSquare(line, colunm).Piece.Equals(Pawn))
+                            {
+                              //  m_rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox
+                            }
+*/
                         }
                     }
                 }
@@ -162,9 +171,9 @@ namespace Xadrez
 
                 ResetGame();
 
-                if(bPieceSelected)
+                if(m_bPieceSelected)
                 {
-                    m_spriteBatch.Draw(maskSelection, rectSelection, Color.Beige);
+                    m_spriteBatch.Draw(m_maskSelection, m_rectSelection, Color.Beige);
                 }
             }
             m_spriteBatch.End();
