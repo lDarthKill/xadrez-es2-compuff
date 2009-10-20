@@ -8,7 +8,7 @@ using Xadrez;
 
 namespace Xadrez
 {
-    class Table
+    public class Table
     {
         // Definitions
 		const bool BLACK = true;
@@ -101,35 +101,35 @@ namespace Xadrez
 
             // Team pieces.
             // First row - Black - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
-			piece = new Rook( nRow, nCol, BLACK );
+			piece = new Rook( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
             m_table[nRow, nCol] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Knight( nRow, nCol, BLACK );
+			piece = new Knight( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Bishop( nRow, nCol, BLACK );
+			piece = new Bishop( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Queen( nRow, nCol, BLACK );
+			piece = new Queen( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new King( nRow, nCol, BLACK );
+			piece = new King( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Bishop( nRow, nCol, BLACK );
+			piece = new Bishop( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Knight( nRow, nCol, BLACK );
+			piece = new Knight( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Rook( nRow, nCol, BLACK );
+			piece = new Rook( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 
@@ -137,7 +137,7 @@ namespace Xadrez
             ++nRow;
             for (nCol = 0; nCol < TABLE_SIZE; ++nCol)
             {
-				piece = new Pawn( nRow, nCol, BLACK );
+				piece = new Pawn( nRow, nCol, BLACK, this );
 				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             }
@@ -156,7 +156,7 @@ namespace Xadrez
 			// Seventh row - White - Pawns
 			for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
 			{
-				piece = new Pawn( nRow, nCol, WHITE );
+				piece = new Pawn( nRow, nCol, WHITE, this );
 				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 			}
@@ -166,39 +166,49 @@ namespace Xadrez
 			//bBlack = !bBlack;
 
 			// Last row - White - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
-			piece = new Rook( nRow, nCol, WHITE );
+			piece = new Rook( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Knight( nRow, nCol, WHITE );
+			piece = new Knight( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Bishop( nRow, nCol, WHITE );
+			piece = new Bishop( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Queen( nRow, nCol, WHITE );
+			piece = new Queen( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new King( nRow, nCol, WHITE );
+			piece = new King( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Bishop( nRow, nCol, WHITE );
+			piece = new Bishop( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Knight( nRow, nCol, WHITE );
+			piece = new Knight( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
             ++nCol;
-			piece = new Rook( nRow, nCol, WHITE );
+			piece = new Rook( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 
         }
+
+		public
+		int
+		TableSize
+		{
+			get
+			{
+				return TABLE_SIZE;
+			}
+		}
 
 		public void getPossibleMovement(Point pt)
 		{
@@ -206,7 +216,7 @@ namespace Xadrez
 		    if (piece == null)
 		        return;
 
-		    PieceMovement movement = piece.Movement;
+			//PieceMovement movement = piece.Movement;
 		}
 
         private Piece getPiece(Point pt)
@@ -232,8 +242,8 @@ namespace Xadrez
 		    // Verify if the piece can move and which are the consequences.
 		    if (newSquare.hasPiece())
 		    {
-		        bool bBlack = oldSquare.Piece.IsBlack();
-		        if (newSquare.Piece.IsBlack() != bBlack)
+		        bool bBlack = oldSquare.Piece.Black;
+		        if (newSquare.Piece.Black != bBlack)
 		            pieceEaten = newSquare.Piece; // Ate a piece of the other team.
 		        else
 		            return false; // Trying to move to a square with piece of the same team.
@@ -246,7 +256,7 @@ namespace Xadrez
 		    if (!pieceEaten.Equals(null))
 		    {
 		        // Hold the eaten piece for later count or something.
-		        if (pieceEaten.IsBlack())
+		        if (pieceEaten.Black)
 		            m_vecDeadBlackPieces.Add(pieceEaten);
 		        else
 		            m_vecDeadWhitePieces.Add(pieceEaten);

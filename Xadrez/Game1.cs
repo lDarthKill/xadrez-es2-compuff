@@ -80,21 +80,30 @@ namespace Xadrez
             //Loading table
             Table.SetSelfImage(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
 
-            //Loading white pieces
-            Pawn.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png"));
-            Knight.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png"));
-            Bishop.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png"));
-            Rook.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png"));
-            King.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png"));
-            Queen.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png"));
+            //Loading black and white pieces (on temporary instances - but the images are static)
+            Pawn pawn = new Pawn(0,0,false,null);
+			pawn.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png");
+			pawn.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown pawn.png" );
 
-            //Loading black pieces
-            Pawn.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown pawn.png"));
-            Knight.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown knight.png"));
-            Bishop.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown bishop.png"));
-            Rook.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown rook.png"));
-            King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png"));
-            Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png"));
+            Knight knight = new Knight(0,0,false,null);
+			knight.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png");
+			knight.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown knight.png" );
+
+            Bishop bishop = new Bishop(0,0,false,null);
+			bishop.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png");
+			bishop.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown bishop.png" );
+
+            Rook rook = new Rook(0,0,false,null);
+			rook.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png");
+			rook.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown rook.png" );
+
+            King king = new King(0,0,false,null);
+			king.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png");
+			king.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png" );
+
+            Queen queen = new Queen(0,0,false,null);
+			queen.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png");
+			queen.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png" );
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
@@ -191,41 +200,41 @@ namespace Xadrez
         protected void ResetGame()
         {
 
-            m_spriteBatch.Draw(Rook.getSelfImageBlack(),
+            m_spriteBatch.Draw(m_gameTable.getTableSquare(0, 0).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 0).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Knight.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 1 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 1).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Bishop.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 2 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 2).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Queen.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 3 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 3).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(King.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 4 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 4).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Bishop.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 5 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 5).BoundingBox,
                                 Color.Beige);
-                   
-            m_spriteBatch.Draw(Knight.getSelfImageBlack(),
+
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 6 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 6).BoundingBox
                                 , Color.Beige);
 
-            m_spriteBatch.Draw(Rook.getSelfImageBlack(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 7 ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(0, 7).BoundingBox,
                                 Color.Beige);
 
             for (int j = 0; j <= 7; j++ )
             {
-                m_spriteBatch.Draw(Pawn.getSelfImageBlack(),
+				m_spriteBatch.Draw( m_gameTable.getTableSquare( 1, j ).Piece.SelfImageBlack,
                                 m_gameTable.getTableSquare(1, j).BoundingBox,
                                 Color.Beige);
             }
@@ -233,40 +242,40 @@ namespace Xadrez
 
             for (int j = 0; j <= 7; j++)
             {
-                m_spriteBatch.Draw(Pawn.getSelfImageWhite(),
+				m_spriteBatch.Draw( m_gameTable.getTableSquare( 6, j ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(6, j).BoundingBox,
                                 Color.Beige);
             }
 
-            m_spriteBatch.Draw(Rook.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 0 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 0).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Knight.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 1 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 1).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Bishop.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 2 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 2).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Queen.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 3 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 3).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(King.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 4 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 4).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Bishop.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 5 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 5).BoundingBox,
                                 Color.Beige);
 
-            m_spriteBatch.Draw(Knight.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 6 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 6).BoundingBox
                                 , Color.Beige);
 
-            m_spriteBatch.Draw(Rook.getSelfImageWhite(),
+			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 7 ).Piece.SelfImageWhite,
                                 m_gameTable.getTableSquare(7, 7).BoundingBox,
                                 Color.Beige);
 
