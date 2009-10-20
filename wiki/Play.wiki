@@ -4,6 +4,7 @@
 
   Classe que representa uma jogada, mais especificamente a movimentação de uma peça de uma [TableSquare] para outra.
 
+
 Namespace: Xadrez
 
  ==Membros==
@@ -11,6 +12,7 @@ Namespace: Xadrez
   {{{Point m_ptOld}}} - Posição original da peça no tabuleiro.
 
   {{{Point m_ptNew}}} - Posição final da peça no tabuleiro.
+
 
  ==Métodos==
 
