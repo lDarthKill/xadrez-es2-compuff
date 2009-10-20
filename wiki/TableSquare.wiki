@@ -1,6 +1,6 @@
 #summary Descrição da classe TableSquare
 
- =Classe TableSquare=
+ =Classe `TableSquare`=
 
   Classe que representa uma casa do tabuleiro. É uma inner class da classe [Table].
 
