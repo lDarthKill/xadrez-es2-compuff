@@ -37,5 +37,17 @@ namespace Xadrez
             selfImageWhite = _texture;
         }
 
+        public static Texture2D
+        getSelfImageWhite()
+        {
+            return selfImageWhite;
+        }
+
+        public static Texture2D
+        getSelfImageBlack()
+        {
+            return selfImageBlack;
+        }
+
     }
 }

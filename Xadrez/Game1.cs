@@ -110,6 +110,26 @@ namespace Xadrez
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
+            {
+                //ClickOnSquare();
+
+                Rectangle rectMouse;
+                rectMouse.X = Mouse.GetState().X;
+                rectMouse.Y = Mouse.GetState().Y;
+                rectMouse.Width = 1;
+                rectMouse.Height = 1;
+
+
+                for (int line = 0; line <= 7; line++ )
+                {
+                    for (int colunm = 0; colunm <= 7; colunm++)
+                    {
+                        m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse);                                              
+                    }
+                }
+            }
+
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -126,40 +146,9 @@ namespace Xadrez
             m_spriteBatch.Begin();
 
             m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
-            
-            //Rectangle rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,6).BoundingBox.X,
-            //             (int) m_gameTable.getTableSquare(0,6).BoundingBox.Y,
-            //              71,
-            //              70);
 
-            Rectangle rectTestPiece = m_gameTable.getTableSquare(0, 6).BoundingBox;
-            
-            m_spriteBatch.Draw(King.getSelfImageBlack(),
-                                m_gameTable.getTableSquare(0, 6).BoundingBox,
-                                Color.Beige);
-
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,7).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(0,7).BoundingBox.Y,
-              71,
-              71);
-
-            m_spriteBatch.Draw(King.getSelfImageBlack(), rectTestPiece, Color.Beige);
-
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 6).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(7, 6).BoundingBox.Y,
-              71,
-              71);
-
-            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige);
-
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 7).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(7, 7).BoundingBox.Y,
-              71,
-              70);
-
-            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige); 
-
-
+            ResetGame();
+ 
             m_spriteBatch.End();
 
             base.Draw(gameTime);
@@ -168,35 +157,84 @@ namespace Xadrez
         protected void ResetGame()
         {
 
-            m_spriteBatch.Draw(King.getSelfImageBlack(),
-                    m_gameTable.getTableSquare(0, 6).BoundingBox,
-                    Color.Beige);
+            m_spriteBatch.Draw(Rook.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 0).BoundingBox,
+                                Color.Beige);
 
-       
+            m_spriteBatch.Draw(Knight.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 1).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Bishop.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 2).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Queen.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 3).BoundingBox,
+                                Color.Beige);
+
             m_spriteBatch.Draw(King.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 4).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Bishop.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 5).BoundingBox,
+                                Color.Beige);
+                   
+            m_spriteBatch.Draw(Knight.getSelfImageBlack(),
                                 m_gameTable.getTableSquare(0, 6).BoundingBox
                                 , Color.Beige);
 
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,7).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(0,7).BoundingBox.Y,
-              71,
-              71);
+            m_spriteBatch.Draw(Rook.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 7).BoundingBox,
+                                Color.Beige);
 
-            m_spriteBatch.Draw(King.getSelfImageBlack(), rectTestPiece, Color.Beige);
+            for (int j = 0; j <= 7; j++ )
+            {
+                m_spriteBatch.Draw(Pawn.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(1, j).BoundingBox,
+                                Color.Beige);
+            }
 
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 6).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(7, 6).BoundingBox.Y,
-              71,
-              71);
 
-            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige);
+            for (int j = 0; j <= 7; j++)
+            {
+                m_spriteBatch.Draw(Pawn.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(6, j).BoundingBox,
+                                Color.Beige);
+            }
 
-            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 7).BoundingBox.X,
-             (int)m_gameTable.getTableSquare(7, 7).BoundingBox.Y,
-              71,
-              70);
+            m_spriteBatch.Draw(Rook.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 0).BoundingBox,
+                                Color.Beige);
 
-            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige); 
+            m_spriteBatch.Draw(Knight.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 1).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Bishop.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 2).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Queen.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 3).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(King.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 4).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Bishop.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 5).BoundingBox,
+                                Color.Beige);
+
+            m_spriteBatch.Draw(Knight.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 6).BoundingBox
+                                , Color.Beige);
+
+            m_spriteBatch.Draw(Rook.getSelfImageWhite(),
+                                m_gameTable.getTableSquare(7, 7).BoundingBox,
+                                Color.Beige);
 
         }
 
