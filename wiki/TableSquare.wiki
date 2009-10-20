@@ -1,13 +1,25 @@
-#summary One-sentence summary of this page.
+#summary Descrição da classe TableSquare
 
-= Introduction =
+ =Classe TableSquare=
 
-Add your content here.
+  Classe que representa uma casa do tabuleiro. É uma inner class da classe [Table].
 
 
-= Details =
+ ==Membros==
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+  {{{Piece m_piece}}} - Aponta para a peça que está neste {{{TableSquare}}}. Pode ser {{{null}}}.
+
+  {{{Rectangle m_rBoundingBox}}} - Retangulo com as coordenadas do {{{TableSquare}}} na interface.
+
+  
+ ==Métodos==
+
+  {{{TableSquare( )}}} - Construtor padrão.
+
+  {{{TableSquare( Piece _piece, Rectangle _boundingBox )}}} - Construtor que recebe a peça que está neste {{{TableSquare}}} e o retangulo do {{{TableSquare}}} na interface.
+
+  {{{Piece}}} - Accessor. Seta/Retorna a peça que está no {{{TableSquare}}} atualmente.
+
+  {{{BoundingBox}}} - Accessor. Seta/Retorna o retângulo do {{{TableSquare}}} na interface.
+
+  {{{hasPiece()}}} - Retorna {{{true}}} se existe uma peça neste {{{TableSquare}}}.
