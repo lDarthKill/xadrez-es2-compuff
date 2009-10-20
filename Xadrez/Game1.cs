@@ -30,9 +30,8 @@ namespace Xadrez
         {
             m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
-			IsMouseVisible = true;
+            IsMouseVisible = true;
         }
-
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
         /// This is where it can query for any required services and load any non-graphic
@@ -54,7 +53,20 @@ namespace Xadrez
             m_graphics.PreferredBackBufferWidth = 640;
             m_graphics.ApplyChanges();
 
-           
+
+            m_gameTable = new Table();
+
+        }
+
+        /// <summary>
+        /// LoadContent will be called once per game and is the place to load
+        /// all of your content.
+        /// </summary>
+        protected override void LoadContent()
+        {
+            // Create a new SpriteBatch, which can be used to draw textures.
+            m_spriteBatch = new SpriteBatch(GraphicsDevice);
+
             //Loading table
             Table.SetSelfImage(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
 
@@ -67,23 +79,13 @@ namespace Xadrez
             Queen.SetSelfImageWhite(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png"));
 
             //Loading black pieces
-            Pawn.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black pawn.png"));
-            Knight.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black knight.png"));
-            Bishop.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black bishop.png"));
-            Rook.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black rook.png"));
-            King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black king.png"));
-            Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/black queen.png"));
+            Pawn.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown pawn.png"));
+            Knight.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown knight.png"));
+            Bishop.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown bishop.png"));
+            Rook.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown rook.png"));
+            King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png"));
+            Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png"));
 
-        }
-
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
-        protected override void LoadContent()
-        {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use this.Content to load your game content here
         }
@@ -124,10 +126,79 @@ namespace Xadrez
             m_spriteBatch.Begin();
 
             m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
+            
+            //Rectangle rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,6).BoundingBox.X,
+            //             (int) m_gameTable.getTableSquare(0,6).BoundingBox.Y,
+            //              71,
+            //              70);
+
+            Rectangle rectTestPiece = m_gameTable.getTableSquare(0, 6).BoundingBox;
+            
+            m_spriteBatch.Draw(King.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 6).BoundingBox,
+                                Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,7).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(0,7).BoundingBox.Y,
+              71,
+              71);
+
+            m_spriteBatch.Draw(King.getSelfImageBlack(), rectTestPiece, Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 6).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(7, 6).BoundingBox.Y,
+              71,
+              71);
+
+            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 7).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(7, 7).BoundingBox.Y,
+              71,
+              70);
+
+            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige); 
+
 
             m_spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
+        protected void ResetGame()
+        {
+
+            m_spriteBatch.Draw(King.getSelfImageBlack(),
+                    m_gameTable.getTableSquare(0, 6).BoundingBox,
+                    Color.Beige);
+
+       
+            m_spriteBatch.Draw(King.getSelfImageBlack(),
+                                m_gameTable.getTableSquare(0, 6).BoundingBox
+                                , Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(0,7).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(0,7).BoundingBox.Y,
+              71,
+              71);
+
+            m_spriteBatch.Draw(King.getSelfImageBlack(), rectTestPiece, Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 6).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(7, 6).BoundingBox.Y,
+              71,
+              71);
+
+            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige);
+
+            rectTestPiece = new Rectangle((int)m_gameTable.getTableSquare(7, 7).BoundingBox.X,
+             (int)m_gameTable.getTableSquare(7, 7).BoundingBox.Y,
+              71,
+              70);
+
+            m_spriteBatch.Draw(King.getSelfImageWhite(), rectTestPiece, Color.Beige); 
+
+        }
+
     }
 }
