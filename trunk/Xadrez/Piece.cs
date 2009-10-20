@@ -8,74 +8,111 @@ using ConstTypes;
 
 namespace Xadrez
 {
-    public class Piece
-    {
-        private     bool            m_bAlive;
-        private     bool            m_bBlack;
-        private     Point           m_position;
-		protected   PieceMovement   m_movement;
-        
-//        static Texture2D selfImageBlack;
-//        static Texture2D selfImageWhite;
+	public abstract class Piece
+	{
+		// Private attributes
+		protected     bool            m_bAlive;
+		protected     bool            m_bBlack;
+		protected     Point           m_position;
+		protected     Table           m_parentTable;
+		//protected   PieceMovement   m_movement;
 
-        public Piece(bool bBlack)
-        {
-            this.m_bBlack = bBlack;
-            m_position = new Point();
-        }
+		//        static Texture2D selfImageBlack;
+		//        static Texture2D selfImageWhite;
 
-        public Piece(int posX, int posY, bool bBlack)
-        {
-            SetPosition(posX, posY);
-            this.m_bBlack = bBlack;
-        }
-
-        public Point getPosition()
-        {
-            return m_position;
-        }
-
-        public void SetPosition(int _posX, int _posY)
-        {
-            m_position.X = _posX;
-            m_position.Y = _posY;
-        }
-
-		public PieceMovement Movement
+		
+		// Constructors
+		public 
+		Piece( bool bBlack, Table _parentTable ) : this( 0, 0, bBlack, _parentTable )
 		{
-		    get { return m_movement; }
-		    // Tácio - Doesn`t need a "set" accessor, the movement of a piece is immutable.
+			
 		}
 
-        public bool IsAlive()
-        {
-            return m_bAlive;
-        }
+		public
+		Piece( int posX, int posY, bool bBlack, Table _parentTable )
+		{
+			SetPosition( posX, posY );
+			m_bBlack = bBlack;
+			m_parentTable = _parentTable;
+		}
 
-        public void SetAlive(bool _bAlive)
-        {
-            m_bAlive = _bAlive;
-        }
+		
+		// Public Access Methods and Properties
+		public 
+		Point 
+		Position
+		{
+			get
+			{
+				return m_position;
+			}
 
-        public bool IsBlack()
-        {
-            return m_bBlack;
-        }
+			set
+			{
+				m_position = value;
+			}
+		}
 
-        public void SetBlack(bool bBlack)
-        {
-            this.m_bBlack = bBlack;
-        }
+		public 
+		void 
+		SetPosition( int _posX, int _posY )
+		{
+			m_position = new Point( _posX, _posY );
+		}
 
-/*        public static void SetSelfImageBlack(Texture2D _texture)
-        {
-            selfImageBlack = _texture;
-        }
+		public 
+		bool 
+		Alive
+		{
+			get
+			{
+				return m_bAlive;
+			}
 
-        public static void SetSelfImageWhite(Texture2D _texture)
-        {
-            selfImageWhite = _texture;
-        }
- */
-    }
+			set
+			{
+				m_bAlive = value;
+			}
+		}
+
+		public
+		bool 
+		Black
+		{
+			get
+			{
+				return m_bBlack;
+			}
+
+			set
+			{
+				m_bBlack = value;
+			}
+		}
+
+		
+		// Public Abstract Methods and Properties
+		public
+		abstract
+		List<Point>
+		getPossiblePositions( );
+
+		public
+		abstract
+		Texture2D
+		SelfImageBlack
+		{
+			get;
+			set;
+		}
+
+		public
+		abstract
+		Texture2D
+		SelfImageWhite
+		{
+			get;
+			set;
+		}
+	}
 }
