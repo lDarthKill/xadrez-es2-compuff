@@ -46,6 +46,6 @@ Namespace: Xadrez
 
 ==Operadores==
 
-  {{{static Play operator +(Table table, Play play)}}} - Realiza uma jogada no tabuleiro {{{table}}}. Retorna uma novo tabuleiro. Semelhante ao método {{{move}}}, porém cria uma cópia do tabuleiro para retorná-lo. Método público, será usado pelo algoritmo minimax.
+  {{{static Table operator +(Table table, Play play)}}} - Realiza uma jogada no tabuleiro {{{table}}}. Retorna uma novo tabuleiro. Semelhante ao método {{{move}}}, porém cria uma cópia do tabuleiro para retorná-lo. Método público, será usado pelo algoritmo minimax.
 
   {{{static Play operator -(Table newTable, Table oldTable)}}} - Compara dois tabuleiros e retorna a jogada que os diferencia. Método público, será usado pelo algoritmo minimax.
