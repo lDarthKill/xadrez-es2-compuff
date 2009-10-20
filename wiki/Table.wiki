@@ -1,4 +1,6 @@
-=Descrição da classe Table=
+#summary Descrição da classe Table
+
+ =Classe Table=
 
 Namespace: Xadrez
 
