@@ -127,7 +127,9 @@ namespace Xadrez
                 rectMouse.Height = 1;
 
 
-                for (int line = 0; line <= 7; line++ )
+                bPieceSelected = false;
+
+                for (int line = 0; line <= 7; line++)
                 {
                     for (int colunm = 0; colunm <= 7; colunm++)
                     {
@@ -135,7 +137,7 @@ namespace Xadrez
                         {
                             bPieceSelected = true;
                             rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox;
-                            
+
                         }
                     }
                 }
