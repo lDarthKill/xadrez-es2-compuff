@@ -20,7 +20,7 @@ namespace IA
             m_bBlack = bBlack;
         }
 
-        public Play getPlay(Table table)
+        public Play getCPUPlay(Table table)
         {
             negamax(table, 3);
             return (m_winnerTable - table);
