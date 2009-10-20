@@ -27,6 +27,7 @@ namespace Xadrez
         Rectangle m_rectSelection;
         bool m_bPieceSelected;
         Texture2D m_maskSelection;
+        Texture2D m_maskSelectionTarget;
 //        private List<Rectangle> m_;
 
 
@@ -96,6 +97,7 @@ namespace Xadrez
             Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png"));
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
+            m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
             // TODO: use this.Content to load your game content here
         }
 
@@ -174,6 +176,11 @@ namespace Xadrez
                 if(m_bPieceSelected)
                 {
                     m_spriteBatch.Draw(m_maskSelection, m_rectSelection, Color.Beige);
+
+                    m_spriteBatch.Draw(m_maskSelectionTarget, m_gameTable.getTableSquare(4, 4).BoundingBox, Color.Beige);
+                                 
+                    m_spriteBatch.Draw(m_maskSelectionTarget, m_gameTable.getTableSquare(5, 4).BoundingBox, Color.Beige);
+                                       
                 }
             }
             m_spriteBatch.End();
