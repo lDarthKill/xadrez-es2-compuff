@@ -24,6 +24,10 @@ namespace Xadrez
 
         public Rectangle m_rectTable;
 
+        Rectangle rectSelection;
+        bool bPieceSelected;
+        Texture2D maskSelection;
+
         Table m_gameTable;
 
         public Game1()
@@ -56,6 +60,8 @@ namespace Xadrez
 
             m_gameTable = new Table();
 
+            bPieceSelected = false;
+
         }
 
         /// <summary>
@@ -86,7 +92,7 @@ namespace Xadrez
             King.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png"));
             Queen.SetSelfImageBlack(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png"));
 
-
+            maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection.png");
             // TODO: use this.Content to load your game content here
         }
 
@@ -125,7 +131,12 @@ namespace Xadrez
                 {
                     for (int colunm = 0; colunm <= 7; colunm++)
                     {
-                        m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse);                                              
+                        if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
+                        {
+                            bPieceSelected = true;
+                            rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox;
+                            
+                        }
                     }
                 }
             }
@@ -144,11 +155,16 @@ namespace Xadrez
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             m_spriteBatch.Begin();
+            {
+                m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
 
-            m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
+                ResetGame();
 
-            ResetGame();
- 
+                if(bPieceSelected)
+                {
+                    m_spriteBatch.Draw(maskSelection, rectSelection, Color.Beige);
+                }
+            }
             m_spriteBatch.End();
 
             base.Draw(gameTime);
