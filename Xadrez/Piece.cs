@@ -13,7 +13,7 @@ namespace Xadrez
         private     bool            m_bAlive;
         private     bool            m_bBlack;
         private     Point           m_position;
-		//protected   PieceMovement   m_movement;
+		protected   PieceMovement   m_movement;
         
 //        static Texture2D selfImageBlack;
 //        static Texture2D selfImageWhite;
@@ -41,11 +41,11 @@ namespace Xadrez
             m_position.Y = _posY;
         }
 
-		//public PieceMovement Movement
-		//{
-		//    get { return m_movement; }
-		//    // Tácio - Doesn`t need a "set" accessor, the movement of a piece is immutable.
-		//}
+		public PieceMovement Movement
+		{
+		    get { return m_movement; }
+		    // Tácio - Doesn`t need a "set" accessor, the movement of a piece is immutable.
+		}
 
         public bool IsAlive()
         {
