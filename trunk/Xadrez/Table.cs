@@ -76,6 +76,11 @@ namespace Xadrez
 		private List< Piece >     m_vecDeadBlackPieces;
         private List< Piece >     m_vecDeadWhitePieces;
 
+        public TableSquare getTableSquare(int posX, int posY)
+        {
+            return m_table[posX, posY];
+        }
+
 		public Table( )
 		{
 			m_table = new TableSquare[ TABLE_SIZE, TABLE_SIZE ];
