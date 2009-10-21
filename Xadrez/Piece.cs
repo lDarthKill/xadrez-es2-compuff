@@ -31,7 +31,7 @@ namespace Xadrez
 		public
 		Piece( int posX, int posY, bool bBlack, Table _parentTable )
 		{
-			SetPosition( posX, posY );
+			m_position = new Point( posX, posY );
 			m_bBlack = bBlack;
 			m_parentTable = _parentTable;
 		}
