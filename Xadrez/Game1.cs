@@ -198,18 +198,18 @@ namespace Xadrez
 
             for (int line = 0; line <= 7; line++)
             {
-                for (int colunm = 0; colunm <= 7; colunm++)
+                for (int column = 0; column <= 7; column++)
                 {
-                    if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
+                    if (m_gameTable.getTableSquare(line, column).BoundingBox.Intersects(rectMouse))
                     {
                         m_bPieceSelected = true;
                         m_pointSquareSelection.X = line;
-                        m_pointSquareSelection.Y = colunm;
+                        m_pointSquareSelection.Y = column;
 
-                        if (m_gameTable.getTableSquare(line, colunm).Piece == null)
+                        if (m_gameTable.getTableSquare(line, column).Piece == null)
                             return false;
 
-                        List<Point> listPositions = m_gameTable.getTableSquare(line, colunm).Piece.getPossiblePositions();
+                        List<Point> listPositions = m_gameTable.getTableSquare(line, column).Piece.getPossiblePositions();
                         if (listPositions == null)
                             return false;
 
@@ -373,20 +373,20 @@ namespace Xadrez
         {
             for (int line = 0; line <= 7; line++)
             {
-                for (int colunm = 0; colunm <= 7; colunm++)
+                for (int column = 0; column <= 7; column++)
                 {
-                    if (m_gameTable.getTableSquare(line, colunm).Piece == null)
+                    if (m_gameTable.getTableSquare(line, column).Piece == null)
                         continue;
-                    if(m_gameTable.getTableSquare(line, colunm).Piece.Black)
+                    if(m_gameTable.getTableSquare(line, column).Piece.Black)
                     {
-                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageBlack,
-                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, column).Piece.SelfImageBlack,
+                                            m_gameTable.getTableSquare(line, column).BoundingBox,
                                             Color.Beige);
                     }
                     else
                     {
-                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageWhite,
-                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, column).Piece.SelfImageWhite,
+                                            m_gameTable.getTableSquare(line, column).BoundingBox,
                                             Color.Beige);
                     }
 

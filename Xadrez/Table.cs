@@ -265,7 +265,7 @@ namespace Xadrez
 		    return true;
 		}
 
-        private bool isPtInTable(Point pt)
+        public bool isPtInTable(Point pt)
         {
             if (pt.X < 0 || pt.X >= TABLE_SIZE)
                 return false;
