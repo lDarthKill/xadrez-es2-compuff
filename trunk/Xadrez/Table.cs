@@ -249,9 +249,13 @@ namespace Xadrez
             newSquare.Piece = oldSquare.Piece;
             oldSquare.Piece = null;
 
+			newSquare.Piece.Position = _play.newPosition;
+
 			// Hold the eaten piece for later count or something.
 			if( !pieceEaten.Equals( null ) )
 			{
+				pieceEaten.SetPosition( -1, -1 );
+
 				if( pieceEaten.Black )
 					m_vecDeadBlackPieces.Add( pieceEaten );
 				else
