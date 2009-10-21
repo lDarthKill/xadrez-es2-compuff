@@ -11,4 +11,10 @@ namespace ConstTypes
         //public int Y;
         //public int X;
     }
+
+    public enum Play_Turn
+    {
+        Black_Turn,
+        White_Turn,
+    }
 }

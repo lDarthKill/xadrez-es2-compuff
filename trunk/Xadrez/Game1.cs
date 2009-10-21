@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
+using ConstTypes;
 
 namespace Xadrez
 {
@@ -29,6 +30,10 @@ namespace Xadrez
         Texture2D                   m_maskSelectionTarget;
         private List<Point>         m_listTargetsMoviments;
         bool                        m_bResetGame;
+        Play_Turn                   m_playTurn;
+
+        int m_updateCounts;
+        bool m_bCanBePressed;
 
 
 
@@ -68,6 +73,11 @@ namespace Xadrez
 
             m_bPieceSelected = false;
             m_bResetGame = true;
+
+            m_bCanBePressed = false;
+            m_updateCounts = 0;
+
+            m_playTurn = Play_Turn.Black_Turn;
 
         }
 
@@ -130,15 +140,31 @@ namespace Xadrez
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
+            
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
             if (Keyboard.GetState().IsKeyDown(Keys.F10))
-                m_bResetGame = true;
-
-            if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
+                m_bResetGame = true;
+                return;
+            }
+
+            if (Mouse.GetState().LeftButton == ButtonState.Released)
+            {
+                m_updateCounts++;
+                m_bCanBePressed = true;
+                return;
+            }
+
+            if ((m_bCanBePressed) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
+            {
+                if (m_updateCounts <= 10)
+                    return;
+
+
+                m_updateCounts = 0;
                 Rectangle rectMouse;
                 rectMouse.X = Mouse.GetState().X;
                 rectMouse.Y = Mouse.GetState().Y;
@@ -151,6 +177,15 @@ namespace Xadrez
                     m_pointSquareSelection.Y = -1;
                     m_listTargetsMoviments.Clear();
                     m_bPieceSelected = false;
+
+                    if (m_playTurn == Play_Turn.Black_Turn)
+                        m_playTurn = Play_Turn.White_Turn;
+                    else
+                        m_playTurn = Play_Turn.Black_Turn;
+                    
+                    
+                    base.Update(gameTime);
+
                     return;
                 }
 
@@ -158,8 +193,6 @@ namespace Xadrez
 
 
             }
-
-            // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
@@ -198,31 +231,32 @@ namespace Xadrez
 
             for (int line = 0; line <= 7; line++)
             {
-                for (int column = 0; column <= 7; column++)
+                for (int colunm = 0; colunm <= 7; colunm++)
                 {
-                    if (m_gameTable.getTableSquare(line, column).BoundingBox.Intersects(rectMouse))
+                    if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
                     {
-                        m_bPieceSelected = true;
-                        m_pointSquareSelection.X = line;
-                        m_pointSquareSelection.Y = column;
-
-                        if (m_gameTable.getTableSquare(line, column).Piece == null)
+                        if (m_gameTable.getTableSquare(line, colunm).Piece == null)
                             return false;
 
-                        List<Point> listPositions = m_gameTable.getTableSquare(line, column).Piece.getPossiblePositions();
-                        if (listPositions == null)
-                            return false;
-
-                        for (int i = 0; i < listPositions.Count; i++)
+                        switch(m_playTurn)
                         {
-                            Point ptSquare = listPositions[i];
+                            case Play_Turn.Black_Turn:
+                                if (!(m_gameTable.getTableSquare(line, colunm).Piece.Black))
+                                    return false;
+                                break;
 
-                            if ((ptSquare.X < 0) || (ptSquare.X > 7) || (ptSquare.Y < 0) || (ptSquare.Y > 7))
-                                continue;
-
-                            m_listTargetsMoviments.Add(ptSquare);
+                            case Play_Turn.White_Turn:
+                                if (m_gameTable.getTableSquare(line, colunm).Piece.Black)
+                                    return false;
+                                break;
                         }
 
+                        m_bPieceSelected = true;
+                        m_pointSquareSelection.X = line;
+                        m_pointSquareSelection.Y = colunm;
+
+                        
+                        m_listTargetsMoviments = m_gameTable.getTableSquare(line, colunm).Piece.getPossiblePositions();
                     }
                 }
             }
@@ -240,6 +274,8 @@ namespace Xadrez
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            
 
             m_spriteBatch.Begin();
             {
@@ -267,7 +303,8 @@ namespace Xadrez
                 }
 
                 DrawGamePieces();
-                                
+
+                               
             }
             m_spriteBatch.End();
 
@@ -373,20 +410,20 @@ namespace Xadrez
         {
             for (int line = 0; line <= 7; line++)
             {
-                for (int column = 0; column <= 7; column++)
+                for (int colunm = 0; colunm <= 7; colunm++)
                 {
-                    if (m_gameTable.getTableSquare(line, column).Piece == null)
+                    if (m_gameTable.getTableSquare(line, colunm).Piece == null)
                         continue;
-                    if(m_gameTable.getTableSquare(line, column).Piece.Black)
+                    if(m_gameTable.getTableSquare(line, colunm).Piece.Black)
                     {
-                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, column).Piece.SelfImageBlack,
-                                            m_gameTable.getTableSquare(line, column).BoundingBox,
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageBlack,
+                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
                                             Color.Beige);
                     }
                     else
                     {
-                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, column).Piece.SelfImageWhite,
-                                            m_gameTable.getTableSquare(line, column).BoundingBox,
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageWhite,
+                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
                                             Color.Beige);
                     }
 
