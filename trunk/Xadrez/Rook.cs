@@ -30,188 +30,79 @@ namespace Xadrez
 			// To check if there's a friend piece on the way
 			Piece friend;
 
-			if( m_bBlack )
+			// Forward movement for Black, Backward movement for White
+			for( int i = m_position.X; i < iTableLimit; i++ )
 			{
-				// If the piece is Black it is facing down and it moves from up to down
+				friend = m_parentTable.getTableSquare( i + 1, m_position.Y ).Piece;
 
-				// Forward movement
-				if( m_position.X < iTableLimit )
+				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y ) );
-					}
+					// If there's a piece of the same color on the way, stops before it
+					break;
 				}
 
-				// Backward movement
-				if( m_position.X > 0 )
+				possiblePositions.Add( new Point( i + 1, m_position.Y ) );
+
+				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y ) );
-					}
-				}
-
-				// Left movement
-				if( m_position.Y > 0 )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X, m_position.Y - 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X, m_position.Y - 1 ) );
-					}
-				}
-
-				// Right movement
-				if( m_position.Y < iTableLimit )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X, m_position.Y + 1 ) );
-					}
-				}
-
-				// Forward Left movement
-				if( ( m_position.X < iTableLimit ) && ( m_position.Y > 0 ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y - 1 ) );
-					}
-				}
-
-				// Forward Right movement
-				if( ( ( m_position.X < iTableLimit ) && m_position.Y < iTableLimit ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y + 1 ) );
-					}
-				}
-
-				// Backward Left movement
-				if( ( m_position.X > 0 ) && ( m_position.Y > 0 ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y - 1 ) );
-					}
-				}
-
-				// Backward Right movement
-				if( ( m_position.X > 0 ) && ( m_position.Y < iTableLimit ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y + 1 ) );
-					}
+					// If there's a piece of different color on the way, stops on it (allowing to eat it)
+					break;
 				}
 			}
-			else
+
+			// Backward movement for Black, Forward movement for White
+			for( int i = m_position.X; i > 0; i-- )
 			{
-				// If the piece is White it is facing up and it moves from down to up
+				friend = m_parentTable.getTableSquare( i - 1, m_position.Y ).Piece;
 
-				// Forward movement
-				if( m_position.X > 0 )
+				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y ) );
-					}
+					// If there's a piece of the same color on the way, stops before it
+					break;
 				}
 
-				// Backward movement
-				if( m_position.X < iTableLimit )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
+				possiblePositions.Add( new Point( i - 1, m_position.Y ) );
 
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y ) );
-					}
+				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				{
+					// If there's a piece of different color on the way, stops on it (allowing to eat it)
+					break;
+				}
+			}
+
+			// Left movement
+			for( int i = m_position.Y; i > 0; i-- )
+			{
+				friend = m_parentTable.getTableSquare( m_position.X, i - 1 ).Piece;
+
+				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				{
+					break;
 				}
 
-				// Left movement
-				if( m_position.Y > 0 )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X, m_position.Y - 1 ).Piece;
+				possiblePositions.Add( new Point( m_position.X, i - 1 ) );
 
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X, m_position.Y - 1 ) );
-					}
+				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				{
+					break;
+				}
+			}
+
+			// Right movement
+			for( int i = m_position.Y; i < iTableLimit; i++ )
+			{
+				friend = m_parentTable.getTableSquare( m_position.X, i + 1 ).Piece;
+
+				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				{
+					break;
 				}
 
-				// Right movement
-				if( m_position.Y < iTableLimit )
+				possiblePositions.Add( new Point( m_position.X, i + 1 ) );
+
+				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X, m_position.Y + 1 ) );
-					}
-				}
-
-				// Forward Left movement
-				if( ( m_position.X > 0 ) && ( m_position.Y > 0 ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y - 1 ) );
-					}
-				}
-
-				// Forward Right movement
-				if( ( m_position.X > 0 ) && ( m_position.Y < iTableLimit ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y + 1 ) );
-					}
-				}
-
-				// Backward Left movement
-				if( ( m_position.X < iTableLimit ) && ( m_position.Y > 0 ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y - 1 ) );
-					}
-				}
-
-				// Backward Right movement
-				if( ( ( m_position.X < iTableLimit ) && m_position.Y < iTableLimit ) )
-				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
-
-					if( !( ( friend != null ) && !friend.Black ) )
-					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y + 1 ) );
-					}
+					break;
 				}
 			}
 

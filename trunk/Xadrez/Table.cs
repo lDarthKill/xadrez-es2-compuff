@@ -76,11 +76,6 @@ namespace Xadrez
 		private List< Piece >     m_vecDeadBlackPieces;
         private List< Piece >     m_vecDeadWhitePieces;
 
-        public TableSquare getTableSquare(int posX, int posY)
-        {
-            return m_table[posX, posY];
-        }
-
 		public Table( )
 		{
 			m_table = new TableSquare[ TABLE_SIZE, TABLE_SIZE ];
@@ -90,7 +85,6 @@ namespace Xadrez
 			initTable( );
         }
 
-		//// @//param: bBlack - true if black pieces are at the top.
         private void
 		initTable( )
         {
@@ -200,67 +194,69 @@ namespace Xadrez
 
         }
 
-		public
-		int
-		TableSize
+		public TableSquare getTableSquare( int posX, int posY )
 		{
-			get
-			{
-				return TABLE_SIZE;
-			}
+			return m_table[ posX, posY ];
 		}
 
-		public void getPossibleMovement(Point pt)
-		{
-		    Piece piece = getPiece(pt);
-		    if (piece == null)
-		        return;
-
-			//PieceMovement movement = piece.Movement;
-		}
-
-        private Piece getPiece(Point pt)
+		private Piece getPiece( Point pt )
         {
             if (!isPtInTable(pt))
                 return null;
 
-            return m_table[pt.Y, pt.X].Piece;
+            return m_table[pt.X, pt.Y].Piece;
         }
 
-        public bool move(Play play)
+        public bool move( Play _play )
         {
-            if (!isPtInTable(play.oldPosition))
+            if (!isPtInTable(_play.oldPosition))
                 return false;
 
-            if (!isPtInTable(play.newPosition))
+            if (!isPtInTable(_play.newPosition))
                 return false;
 
-            TableSquare oldSquare = m_table[play.oldPosition.Y, play.oldPosition.X];
-            TableSquare newSquare = m_table[play.newPosition.Y, play.newPosition.X];
+            TableSquare oldSquare = m_table[_play.oldPosition.X, _play.oldPosition.Y];
+            TableSquare newSquare = m_table[_play.newPosition.X, _play.newPosition.Y];
             Piece   pieceEaten = null;
 
-		    // Verify if the piece can move and which are the consequences.
-		    if (newSquare.hasPiece())
-		    {
-		        bool bBlack = oldSquare.Piece.Black;
-		        if (newSquare.Piece.Black != bBlack)
-		            pieceEaten = newSquare.Piece; // Ate a piece of the other team.
-		        else
-		            return false; // Trying to move to a square with piece of the same team.
-		    }
+			if( oldSquare.Piece == null )
+			{
+				// There's no piece moving in this play
+				return false;
+			}
 
+			// Now we double check if this play is possible
+			List<Point> possibleMoves = oldSquare.Piece.getPossiblePositions( );
+			if( !possibleMoves.Contains( _play.newPosition ) )
+			{
+				// Trying to make a move to an invalid position
+				return false;
+			}
+
+			if( newSquare.Piece != null )
+			{
+				// Check if a piece is eaten
+				pieceEaten = newSquare.Piece;
+
+				if( oldSquare.Piece.Black == pieceEaten.Black )
+				{
+					// Trying to eat a piece of your own team
+					return false;
+				}
+			}
+			
             // Move the piece.
-            m_table[play.newPosition.Y, play.newPosition.X].Piece = oldSquare.Piece;
-            m_table[play.oldPosition.Y, play.oldPosition.X].Piece = null;
+            newSquare.Piece = oldSquare.Piece;
+            oldSquare.Piece = null;
 
-		    if (!pieceEaten.Equals(null))
-		    {
-		        // Hold the eaten piece for later count or something.
-		        if (pieceEaten.Black)
-		            m_vecDeadBlackPieces.Add(pieceEaten);
-		        else
-		            m_vecDeadWhitePieces.Add(pieceEaten);
-		    }
+			// Hold the eaten piece for later count or something.
+			if( !pieceEaten.Equals( null ) )
+			{
+				if( pieceEaten.Black )
+					m_vecDeadBlackPieces.Add( pieceEaten );
+				else
+					m_vecDeadWhitePieces.Add( pieceEaten );
+			}
 
 		    return true;
 		}
@@ -292,7 +288,17 @@ namespace Xadrez
 		    throw new NotImplementedException();
 		}
 
-        static public 
+		public
+		int
+		TableSize
+		{
+			get
+			{
+				return TABLE_SIZE;
+			}
+		}
+
+		static public 
         void SetSelfImage(Texture2D _texture)
         {
             m_selfImage = _texture;
