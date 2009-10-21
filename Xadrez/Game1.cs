@@ -18,17 +18,17 @@ namespace Xadrez
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
-        GraphicsDeviceManager m_graphics;
+        GraphicsDeviceManager       m_graphics;
 
-        SpriteBatch m_spriteBatch;
+        SpriteBatch                 m_spriteBatch;
 
-        public Rectangle m_rectTable;
-
-        Rectangle m_rectSelection;
-        bool m_bPieceSelected;
-        Texture2D m_maskSelection;
-        Texture2D m_maskSelectionTarget;
-//        private List<Rectangle> m_;
+        public Rectangle            m_rectTable;
+        Point                       m_pointSquareSelection;
+        bool                        m_bPieceSelected;
+        Texture2D                   m_maskSelection;
+        Texture2D                   m_maskSelectionTarget;
+        private List<Point>         m_listTargetsMoviments;
+        bool                        m_bResetGame;
 
 
 
@@ -62,9 +62,12 @@ namespace Xadrez
             m_graphics.ApplyChanges();
 
 
+            m_listTargetsMoviments = new List<Point>();
+
             m_gameTable = new Table();
 
             m_bPieceSelected = false;
+            m_bResetGame = true;
 
         }
 
@@ -107,6 +110,7 @@ namespace Xadrez
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
+
             // TODO: use this.Content to load your game content here
         }
 
@@ -130,50 +134,104 @@ namespace Xadrez
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
 
+            if (Keyboard.GetState().IsKeyDown(Keys.F10))
+                m_bResetGame = true;
+
             if (Mouse.GetState().LeftButton == ButtonState.Pressed)
             {
-                //ClickOnSquare();
-
                 Rectangle rectMouse;
                 rectMouse.X = Mouse.GetState().X;
                 rectMouse.Y = Mouse.GetState().Y;
                 rectMouse.Width = 1;
                 rectMouse.Height = 1;
 
-
-                m_bPieceSelected = false;
-
-                for (int line = 0; line <= 7; line++)
+                if (ClickOnTarget(rectMouse))
                 {
-                    for (int column = 0; column <= 7; column++)
-                    {
-                        if (m_gameTable.getTableSquare(line, column).BoundingBox.Intersects(rectMouse))
-                        {
-                            m_bPieceSelected = true;
-                            m_rectSelection = m_gameTable.getTableSquare(line, column).BoundingBox;
-
-							Piece selectedPiece = m_gameTable.getTableSquare( line, column ).Piece;
-
-							if( selectedPiece != null )
-							{
-								List<Point> possiblePositions = selectedPiece.getPossiblePositions( );
-							}
-
-                            //test for pawns. It´s not the final code.
- /*                           if (m_gameTable.getTableSquare(line, colunm).Piece.Equals(Pawn))
-                            {
-                              //  m_rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox
-                            }
-*/
-                        }
-                    }
+                    m_pointSquareSelection.X = -1;
+                    m_pointSquareSelection.Y = -1;
+                    m_listTargetsMoviments.Clear();
+                    m_bPieceSelected = false;
+                    return;
                 }
+
+                ClickOnPiece(rectMouse);
+
+
             }
 
             // TODO: Add your update logic here
 
             base.Update(gameTime);
         }
+
+        protected bool ClickOnTarget(Rectangle rectMouse)
+        {
+            if (m_listTargetsMoviments == null)
+                return false;
+
+            if (m_listTargetsMoviments.Count == 0)
+                return false;
+
+            for (int index = 0; index < m_listTargetsMoviments.Count; index++ )
+            {
+                Point ptSquare = m_listTargetsMoviments[index];
+                Rectangle rectTarget = m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).BoundingBox;
+
+                if(rectTarget.Intersects(rectMouse) )
+                {
+                    Play play = new Play();
+                    play.newPosition = ptSquare;
+                    play.oldPosition = m_pointSquareSelection;
+                    m_gameTable.move(play);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        protected bool ClickOnPiece(Rectangle rectMouse)
+        {
+            m_bPieceSelected = false;
+            m_listTargetsMoviments.Clear();
+
+            for (int line = 0; line <= 7; line++)
+            {
+                for (int colunm = 0; colunm <= 7; colunm++)
+                {
+                    if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
+                    {
+                        m_bPieceSelected = true;
+                        m_pointSquareSelection.X = line;
+                        m_pointSquareSelection.Y = colunm;
+
+                        if (m_gameTable.getTableSquare(line, colunm).Piece == null)
+                            return false;
+
+                        List<Point> listPositions = m_gameTable.getTableSquare(line, colunm).Piece.getPossiblePositions();
+                        if (listPositions == null)
+                            return false;
+
+                        for (int i = 0; i < listPositions.Count; i++)
+                        {
+                            Point ptSquare = listPositions[i];
+
+                            if ((ptSquare.X < 0) || (ptSquare.X > 7) || (ptSquare.Y < 0) || (ptSquare.Y > 7))
+                                continue;
+
+                            m_listTargetsMoviments.Add(ptSquare);
+                        }
+
+                    }
+                }
+            }
+
+            return true;
+
+
+        }
+
 
         /// <summary>
         /// This is called when the game should draw itself.
@@ -187,17 +245,29 @@ namespace Xadrez
             {
                 m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
 
-                ResetGame();
-
-                if(m_bPieceSelected)
+                if (m_bResetGame)
                 {
-                    m_spriteBatch.Draw(m_maskSelection, m_rectSelection, Color.Beige);
-
-                    m_spriteBatch.Draw(m_maskSelectionTarget, m_gameTable.getTableSquare(4, 4).BoundingBox, Color.Beige);
-                                 
-                    m_spriteBatch.Draw(m_maskSelectionTarget, m_gameTable.getTableSquare(5, 4).BoundingBox, Color.Beige);
-                                       
+                    ResetGame();
+                    m_bResetGame = false;
+                    m_spriteBatch.End();
+                    
+                    return;
                 }
+
+                if (m_bPieceSelected)
+                {
+                    m_spriteBatch.Draw(m_maskSelection,
+                                       m_gameTable.getTableSquare(m_pointSquareSelection.X, m_pointSquareSelection.Y).BoundingBox,
+                                       Color.Beige);
+
+                    if (m_listTargetsMoviments.Count > 0)
+                    {
+                        DrawTargets();
+                    }
+                }
+
+                DrawGamePieces();
+                                
             }
             m_spriteBatch.End();
 
@@ -224,7 +294,7 @@ namespace Xadrez
                                 Color.Beige);
 
 			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 4 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 4).BoundingBox,
+                                m_gameTable.getTableSquare(5, 4).BoundingBox,
                                 Color.Beige);
 
 			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 5 ).Piece.SelfImageBlack,
@@ -286,6 +356,42 @@ namespace Xadrez
                                 m_gameTable.getTableSquare(7, 7).BoundingBox,
                                 Color.Beige);
 
+        }
+
+        protected void DrawTargets()
+        {
+            for (int index = 0; index < m_listTargetsMoviments.Count; index++)
+            {
+                Point ptSquare = m_listTargetsMoviments[index];
+                m_spriteBatch.Draw(m_maskSelectionTarget,
+                                    m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).BoundingBox,
+                                    Color.Beige);
+            }
+        }
+
+        protected void DrawGamePieces()
+        {
+            for (int line = 0; line <= 7; line++)
+            {
+                for (int colunm = 0; colunm <= 7; colunm++)
+                {
+                    if (m_gameTable.getTableSquare(line, colunm).Piece == null)
+                        continue;
+                    if(m_gameTable.getTableSquare(line, colunm).Piece.Black)
+                    {
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageBlack,
+                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
+                                            Color.Beige);
+                    }
+                    else
+                    {
+                        m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageWhite,
+                                            m_gameTable.getTableSquare(line, colunm).BoundingBox,
+                                            Color.Beige);
+                    }
+
+                }
+            }
         }
 
     }
