@@ -52,18 +52,18 @@ namespace Xadrez
 				{
 					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
 
-					if( !( ( friend != null ) && friend.Black ) )
+					if( friend == null )
 					{
 						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y ) );
-					}
 
-					if( m_bFirstMove && ( ( m_position.X + 1 ) < iTableLimit ) )
-					{
-						friend = m_parentTable.getTableSquare( m_position.X + 2, m_position.Y ).Piece;
-
-						if( !( ( friend != null ) && friend.Black ) )
+						if( m_bFirstMove && ( ( m_position.X + 1 ) < iTableLimit ) )
 						{
-							possiblePositions.Add( new Point( m_position.X + 2, m_position.Y ) );
+							friend = m_parentTable.getTableSquare( m_position.X + 2, m_position.Y ).Piece;
+
+							if( friend == null )
+							{
+								possiblePositions.Add( new Point( m_position.X + 2, m_position.Y ) );
+							}
 						}
 					}
 				}
@@ -99,18 +99,18 @@ namespace Xadrez
 				{
 					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
 
-					if( !( ( friend != null ) && !friend.Black ) )
+					if( friend == null )
 					{
 						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y ) );
-					}
 
-					if( m_bFirstMove && ( ( m_position.X - 1 ) > 0 ) )
-					{
-						friend = m_parentTable.getTableSquare( m_position.X - 2, m_position.Y ).Piece;
-
-						if( !( ( friend != null ) && !friend.Black ) )
+						if( m_bFirstMove && ( ( m_position.X - 1 ) > 0 ) )
 						{
-							possiblePositions.Add( new Point( m_position.X - 2, m_position.Y ) );
+							friend = m_parentTable.getTableSquare( m_position.X - 2, m_position.Y ).Piece;
+
+							if( friend == null )
+							{
+								possiblePositions.Add( new Point( m_position.X - 2, m_position.Y ) );
+							}
 						}
 					}
 				}

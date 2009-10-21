@@ -267,9 +267,9 @@ namespace Xadrez
 
         private bool isPtInTable(Point pt)
         {
-            if (pt.X <= 0 || pt.X >= TABLE_SIZE)
+            if (pt.X < 0 || pt.X >= TABLE_SIZE)
                 return false;
-            if (pt.Y <= 0 || pt.Y >= TABLE_SIZE)
+            if (pt.Y < 0 || pt.Y >= TABLE_SIZE)
                 return false;
 
             return true;
