@@ -252,7 +252,7 @@ namespace Xadrez
 			newSquare.Piece.Position = _play.newPosition;
 
 			// Hold the eaten piece for later count or something.
-			if( !pieceEaten.Equals( null ) )
+			if( pieceEaten != null )
 			{
 				pieceEaten.SetPosition( -1, -1 );
 
