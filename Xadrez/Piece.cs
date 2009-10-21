@@ -49,11 +49,12 @@ namespace Xadrez
 
 			set
 			{
-				m_position = value;
+				SetPosition( value.X, value.Y );
 			}
 		}
 
-		public 
+		public
+		virtual
 		void 
 		SetPosition( int _posX, int _posY )
 		{
