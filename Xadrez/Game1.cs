@@ -145,12 +145,19 @@ namespace Xadrez
 
                 for (int line = 0; line <= 7; line++)
                 {
-                    for (int colunm = 0; colunm <= 7; colunm++)
+                    for (int column = 0; column <= 7; column++)
                     {
-                        if (m_gameTable.getTableSquare(line, colunm).BoundingBox.Intersects(rectMouse))
+                        if (m_gameTable.getTableSquare(line, column).BoundingBox.Intersects(rectMouse))
                         {
                             m_bPieceSelected = true;
-                            m_rectSelection = m_gameTable.getTableSquare(line, colunm).BoundingBox;
+                            m_rectSelection = m_gameTable.getTableSquare(line, column).BoundingBox;
+
+							Piece selectedPiece = m_gameTable.getTableSquare( line, column ).Piece;
+
+							if( selectedPiece != null )
+							{
+								List<Point> possiblePositions = selectedPiece.getPossiblePositions( );
+							}
 
                             //test for pawns. It´s not the final code.
  /*                           if (m_gameTable.getTableSquare(line, colunm).Piece.Equals(Pawn))
