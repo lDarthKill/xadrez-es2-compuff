@@ -18,7 +18,7 @@ namespace Xadrez
 
         public Pawn(int _posX, int _posY, bool bBlack, Table _parentTable ) : base(_posX, _posY, bBlack, _parentTable )
         {
-			//m_movement = new PieceMovement();
+			m_bFirstMove = true;
         }
 
 		public
