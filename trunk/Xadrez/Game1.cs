@@ -32,6 +32,9 @@ namespace Xadrez
         bool                        m_bResetGame;
         Play_Turn                   m_playTurn;
 
+        SoundEffect                 m_soundKlik;
+        SoundEffect                 m_soundKill;
+
         int m_updateCounts;
         bool m_bCanBePressed;
 
@@ -120,6 +123,9 @@ namespace Xadrez
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
+
+            m_soundKlik = Content.Load<SoundEffect>("KLICK");
+            m_soundKill = Content.Load<SoundEffect>("BEEP_FM");
 
             // TODO: use this.Content to load your game content here
         }
@@ -212,10 +218,19 @@ namespace Xadrez
 
                 if(rectTarget.Intersects(rectMouse) )
                 {
+                    bool bKilled = false;
+                    if (m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).Piece != null)
+                        bKilled = true;
+
                     Play play = new Play();
                     play.newPosition = ptSquare;
                     play.oldPosition = m_pointSquareSelection;
                     m_gameTable.move(play);
+
+                    m_soundKlik.Play();
+
+                    if (bKilled)
+                        m_soundKill.Play();
 
                     return true;
                 }
