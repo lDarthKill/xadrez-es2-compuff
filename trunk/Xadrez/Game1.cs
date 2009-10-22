@@ -124,8 +124,8 @@ namespace Xadrez
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
 
-            m_soundKlik = Content.Load<SoundEffect>("KLICK");
-            m_soundKill = Content.Load<SoundEffect>("BEEP_FM");
+			m_soundKlik = Content.Load<SoundEffect>( "Sounds\\KLICK" );
+			m_soundKill = Content.Load<SoundEffect>( "Sounds\\BEEP_FM" );
 
             // TODO: use this.Content to load your game content here
         }

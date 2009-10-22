@@ -35,22 +35,22 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BEEPDROP.WAV">
+    <Compile Include="Sounds\BEEPDROP.WAV">
       <Name>BEEPDROP</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="BEEP_FM.WAV">
+    <Compile Include="Sounds\BEEP_FM.WAV">
       <Name>BEEP_FM</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="KLICK.WAV">
+    <Compile Include="Sounds\KLICK.WAV">
       <Name>KLICK</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
     </Compile>
-    <Compile Include="WOODWOR1.WAV">
+    <Compile Include="Sounds\WOODWOR1.WAV">
       <Name>WOODWOR1</Name>
       <Importer>WavImporter</Importer>
       <Processor>SoundEffectProcessor</Processor>
