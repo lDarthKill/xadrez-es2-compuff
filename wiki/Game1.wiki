@@ -1,6 +1,6 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= Introduction = Essa é a classe de interace do jogo. Todas as imagens são carregadas nessa classe além das capturas de eventos para interação entre o jogador e o jogo.
 
 Add your content here.
 
