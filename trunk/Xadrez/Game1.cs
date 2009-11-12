@@ -11,6 +11,7 @@ using Microsoft.Xna.Framework.Media;
 using Microsoft.Xna.Framework.Net;
 using Microsoft.Xna.Framework.Storage;
 using ConstTypes;
+using IA;
 
 namespace Xadrez
 {
@@ -31,6 +32,9 @@ namespace Xadrez
         private List<Point>         m_listTargetsMoviments;
         bool                        m_bResetGame;
         Play_Turn                   m_playTurn;
+        bool                        m_bPlayerBlackCPU;
+        bool                        m_bPlayerWhiteCPU;
+        MiniMax                     m_cpuPlayer;
 
         SoundEffect                 m_soundKlik;
         SoundEffect                 m_soundKill;
@@ -81,7 +85,10 @@ namespace Xadrez
             m_updateCounts = 0;
 
             m_playTurn = Play_Turn.Black_Turn;
-
+            m_bPlayerBlackCPU = true;
+            m_bPlayerWhiteCPU = false;
+            m_cpuPlayer = new MiniMax();
+            m_cpuPlayer.setTeam(m_bPlayerBlackCPU); // CPU is with Black pieces.
         }
 
         /// <summary>
@@ -164,6 +171,33 @@ namespace Xadrez
                 return;
             }
 
+            if ((m_playTurn == Play_Turn.White_Turn) && (m_bPlayerWhiteCPU))
+            {
+                m_cpuPlayer.setTeam(false); // White team.
+                Play play = m_cpuPlayer.getCPUPlay(m_gameTable);
+                m_gameTable.move(play);
+                m_soundKlik.Play();
+                changeTurn();
+                base.Update(gameTime);
+
+                return;
+            }
+
+            if ((m_playTurn == Play_Turn.Black_Turn) && (m_bPlayerBlackCPU))
+            {
+                Play play = m_cpuPlayer.getCPUPlay(m_gameTable);
+                if (play != null)
+                {
+                    m_gameTable.move(play);
+                    m_soundKlik.Play();
+                }
+
+                changeTurn();
+                base.Update(gameTime);
+
+                return;
+            }
+
             if ((m_bCanBePressed) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
             {
                 if (m_updateCounts <= 10)
@@ -177,6 +211,7 @@ namespace Xadrez
                 rectMouse.Width = 1;
                 rectMouse.Height = 1;
 
+                
                 if (ClickOnTarget(rectMouse))
                 {
                     m_pointSquareSelection.X = -1;
@@ -184,11 +219,7 @@ namespace Xadrez
                     m_listTargetsMoviments.Clear();
                     m_bPieceSelected = false;
 
-                    if (m_playTurn == Play_Turn.Black_Turn)
-                        m_playTurn = Play_Turn.White_Turn;
-                    else
-                        m_playTurn = Play_Turn.Black_Turn;
-                    
+                    changeTurn();
                     
                     base.Update(gameTime);
 
@@ -277,10 +308,15 @@ namespace Xadrez
             }
 
             return true;
-
-
         }
 
+        protected void changeTurn()
+        {
+            if (m_playTurn == Play_Turn.Black_Turn)
+                m_playTurn = Play_Turn.White_Turn;
+            else
+                m_playTurn = Play_Turn.Black_Turn;
+        }
 
         /// <summary>
         /// This is called when the game should draw itself.
