@@ -29,9 +29,9 @@ namespace Xadrez
 		}
 
 		public
-		Piece( int posX, int posY, bool bBlack, Table _parentTable )
+		Piece( int nRow, int nCol, bool bBlack, Table _parentTable )
 		{
-			m_position = new Point( posX, posY );
+			m_position = new Point( nRow, nCol );
 			m_bBlack = bBlack;
 			m_parentTable = _parentTable;
 		}
@@ -56,9 +56,9 @@ namespace Xadrez
 		public
 		virtual
 		void 
-		SetPosition( int _posX, int _posY )
+		SetPosition( int nRow, int nCol )
 		{
-			m_position = new Point( _posX, _posY );
+			m_position = new Point( nRow, nCol );
 		}
 
 		public 
@@ -91,7 +91,30 @@ namespace Xadrez
 			}
 		}
 
+        public Piece Clone()
+        {
+            if (this == null)
+                return null;
+
+            return (Piece)this.MemberwiseClone();
+        }
 		
+        public bool Equals(Piece piece)
+        {
+            if (this.GetType() != piece.GetType())
+                return false;
+            if (this.Position.X != piece.Position.X)
+                return false;
+            if (this.Position.Y != piece.Position.Y)
+                return false;
+            if (this.Alive != piece.Alive)
+                return false;
+            if (this.Black != piece.Black)
+                return false;
+
+            return true;
+        }
+
 		// Public Abstract Methods and Properties
 		public
 		abstract
@@ -107,13 +130,13 @@ namespace Xadrez
 			set;
 		}
 
-		public
-		abstract
-		Texture2D
-		SelfImageWhite
-		{
-			get;
-			set;
-		}
+        public
+        abstract
+        Texture2D
+        SelfImageWhite
+        {
+            get;
+            set;
+        }
 	}
 }

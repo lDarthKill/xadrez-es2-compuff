@@ -8,7 +8,7 @@ using Xadrez;
 
 namespace Xadrez
 {
-    public class Table
+    public class Table: ICloneable
     {
         // Definitions
 		const bool BLACK = true;
@@ -194,9 +194,9 @@ namespace Xadrez
 
         }
 
-		public TableSquare getTableSquare( int posX, int posY )
+		public TableSquare getTableSquare( int nRow, int nCol )
 		{
-			return m_table[ posX, posY ];
+			return m_table[ nRow, nCol ];
 		}
 
 		private Piece getPiece( Point pt )
@@ -282,17 +282,83 @@ namespace Xadrez
 
 		static public Table operator +(Table table, Play play)
 		{
-		    // 2do - returns a copy of the old table modified with the play.
-		    throw new NotImplementedException();
+		    // return a copy of the table modified with the play.
+            Table newTable = (Table)table.Clone();
+            newTable.move(play);
+            return newTable;
 		}
 
 		static public Play operator -(Table newTable, Table oldTable)
 		{
-		    // 2do - return the play that represents the difference between these 2 tables.
-		    throw new NotImplementedException();
+		    // return the play that represents the difference between these 2 tables.
+
+            TableSquare tableSquareNew1 = null,
+                        tableSquareOld1 = null,
+                        tableSquareNew2 = null,
+                        tableSquareOld2 = null;
+
+            Point       pos1 = new Point(),
+                        pos2 = new Point();
+
+            bool bFinish = false;
+            for (int nRow = 0; nRow < TABLE_SIZE; ++nRow)
+            {
+                for (int nCol = 0; nCol < TABLE_SIZE; ++nCol)
+                {
+                    TableSquare tableSquareTempNew = newTable.m_table[nRow, nCol],
+                                tableSquareTempOld = oldTable.m_table[nRow, nCol];
+
+                    
+                    if ((tableSquareTempNew.Piece == null) && (tableSquareTempOld.Piece == null))
+                        continue;
+                    if ((tableSquareTempNew.Piece != null) && (tableSquareTempOld.Piece != null)
+                        && tableSquareTempNew.Piece.Equals(tableSquareTempOld.Piece))
+                        continue;
+
+                    // The piece changed between these two tables.
+                    //  Save the positions.
+                    if ((tableSquareNew1 == null) && (tableSquareOld1 == null))
+                    {
+                        tableSquareNew1 = tableSquareTempNew;
+                        tableSquareOld1 = tableSquareTempOld;
+                        pos1.X = nRow;
+                        pos1.Y = nCol;
+                    }
+                    else
+                    {
+                        tableSquareNew2 = tableSquareTempNew;
+                        tableSquareOld2 = tableSquareTempOld;
+                        pos2.X = nRow;
+                        pos2.Y = nCol;
+
+                        bFinish = true;
+                        break;
+                    }
+                }
+
+                if (bFinish)
+                    break;
+            }
+
+            if (!bFinish)
+                return null;
+
+            Play play = new Play();
+            if ((tableSquareOld1.Piece != null) && (tableSquareNew1.Piece == null))
+            {
+                play.oldPosition = pos1;
+                play.newPosition = pos2;
+            }
+            else if ((tableSquareOld2.Piece != null) && (tableSquareNew2.Piece == null))
+            {
+                play.oldPosition = pos2;
+                play.newPosition = pos1;
+            }
+
+            return play;
 		}
 
-		public
+        public
 		int
 		TableSize
 		{
@@ -313,5 +379,27 @@ namespace Xadrez
         {
             return m_selfImage;
         }
+
+        #region ICloneable Members
+
+        public object Clone()
+        {
+            Table table = new Table();
+            for (int nRow = 0; nRow < TABLE_SIZE; ++nRow)
+            {
+                for (int nCol = 0; nCol < TABLE_SIZE; ++nCol)
+                {
+                    Piece piece = this.m_table[nRow, nCol].Piece;
+                    if (piece == null)
+                        table.m_table[nRow, nCol].Piece = piece;
+                    else
+                        table.m_table[nRow, nCol].Piece = piece.Clone();
+                }
+            }
+
+            return (object)table;
+        }
+
+        #endregion
     }
 }

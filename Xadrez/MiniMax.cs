@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Xadrez;
+using Microsoft.Xna.Framework;
 
 namespace IA
 {
@@ -22,15 +23,20 @@ namespace IA
 
         public Play getCPUPlay(Table table)
         {
-            negamax(table, 3);
-            return (m_winnerTable - table);
+            negamax(table, 1);
+            if (m_winnerTable == null)
+                return null;
+
+            Play play = m_winnerTable - table;
+            m_winnerTable = null;
+            return play;
         }
 
         private int negamax(Table table, int depth)
         {
-            if (table.IsInCheckMate(m_bBlack) || (depth == 0))
+            if (/*table.IsInCheckMate(m_bBlack) || */(depth == 0))
             {
-                m_winnerTable = table;
+                //m_winnerTable = table;
                 return evaluateTable(table);
             }
             else
@@ -42,6 +48,7 @@ namespace IA
                     int alphaTmp = Math.Max(alpha, -negamax(childTable, depth - 1));
                     if (alphaTmp > alpha)
                     {
+                        alpha = alphaTmp;
                         m_winnerTable = childTable;
                     }
                 }
@@ -66,12 +73,76 @@ namespace IA
 
         private int evaluateTable(Table table)
         {
-            throw new NotImplementedException();
+            int nValue = 0;
+
+            for (int nRow = 0; nRow < table.TableSize; ++nRow)
+            {
+                for (int nCol = 0; nCol < table.TableSize; ++nCol)
+                {
+                    Piece piece = table.getTableSquare(nCol, nRow).Piece;
+                    if (piece == null)
+                        continue;
+
+                    if (m_bBlack != piece.Black)
+                    {
+                        if (piece is Queen)
+                        {
+                            nValue += 50;
+                        }
+                        else if (piece is Bishop)
+                        {
+                            nValue += 25;
+                        }
+                        else if (piece is Rook)
+                        {
+                            nValue += 20;
+                        }
+                        else if (piece is Knight)
+                        {
+                            nValue += 10;
+                        }
+                        else if (piece is Pawn)
+                        {
+                            nValue += 5;
+                        }
+                    }
+                }
+            }
+
+            return nValue;
         }
 
         private List<Table> generateTables(Table table)
         {
-            throw new NotImplementedException();
+            List<Table> lstTables = new List<Table>();
+
+            for (int nRow = 0; nRow < table.TableSize; ++nRow)
+            {
+                for (int nCol = 0; nCol < table.TableSize; ++nCol)
+                {
+                    Table.TableSquare tableSquare = table.getTableSquare(nRow, nCol);
+
+                    // Verify if the is a piece in this square.
+                    if (tableSquare.Piece == null)
+                        continue;
+
+                    // Verify if the piece is mine.
+                    if (tableSquare.Piece.Black != m_bBlack)
+                        continue;
+                    
+                    List<Point> lstPositions = tableSquare.Piece.getPossiblePositions();
+                    foreach (Point position in lstPositions)
+                    {
+                        Play play = new Play();
+                        play.oldPosition = new Point(nRow, nCol);
+                        play.newPosition = position;
+                        Table newTable = table + play;
+                        lstTables.Add(newTable);
+                    }
+                }
+            }
+
+            return lstTables;
         }
     }
 }
