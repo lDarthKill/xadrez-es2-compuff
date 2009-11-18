@@ -380,6 +380,19 @@ namespace Xadrez
             return m_selfImage;
         }
 
+        public
+        List<Piece> GetListDeadBlackPieces()
+        {
+            return m_vecDeadBlackPieces;
+        }
+
+        public
+        List<Piece> GetListDeadWhitePieces()
+        {
+            return m_vecDeadWhitePieces;
+        }
+
+
         #region ICloneable Members
 
         public object Clone()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 
+
 namespace ConstTypes
 {
     // Tácio - Deprecated - use class Point
@@ -17,4 +18,5 @@ namespace ConstTypes
         Black_Turn,
         White_Turn,
     }
+
 }

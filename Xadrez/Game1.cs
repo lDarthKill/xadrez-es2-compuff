@@ -20,6 +20,7 @@ namespace Xadrez
     /// </summary>
     public class Game1 : Microsoft.Xna.Framework.Game
     {
+
         GraphicsDeviceManager       m_graphics;
 
         SpriteBatch                 m_spriteBatch;
@@ -29,6 +30,15 @@ namespace Xadrez
         bool                        m_bPieceSelected;
         Texture2D                   m_maskSelection;
         Texture2D                   m_maskSelectionTarget;
+        Texture2D                   m_imgPlayNow;
+        Texture2D                   m_imgWhiteButton;
+        Texture2D                   m_imgBlackButton;
+
+        private Rectangle [ ]       m_DiedBlackSpaces;
+        private Rectangle [ ]       m_DiedWhiteSpaces;
+        private Rectangle           m_rectPlayNow;
+        private Rectangle           m_rectButton;
+
         private List<Point>         m_listTargetsMoviments;
         bool                        m_bResetGame;
         Play_Turn                   m_playTurn;
@@ -45,6 +55,10 @@ namespace Xadrez
 
 
         Table m_gameTable;
+
+        const int TOTAL_PIECES = 32;
+        const int TOTAL_BLACK_PIECES = TOTAL_PIECES/2;
+        const int TOTAL_WHITE_PIECES = TOTAL_PIECES/2;
 
         public Game1()
         {
@@ -89,6 +103,33 @@ namespace Xadrez
             m_bPlayerWhiteCPU = false;
             m_cpuPlayer = new MiniMax();
             m_cpuPlayer.setTeam(m_bPlayerBlackCPU); // CPU is with Black pieces.
+
+            m_DiedBlackSpaces = new Rectangle[TOTAL_BLACK_PIECES];
+            m_DiedWhiteSpaces = new Rectangle[TOTAL_WHITE_PIECES];
+
+            InitializeDeadSpaces();
+
+            
+            m_rectPlayNow.Height = 100;
+            m_rectPlayNow.Width = 20;
+            m_rectPlayNow.X = (36 / 2) - (m_rectPlayNow.Width/2);
+            m_rectPlayNow.Y = (640 / 2) - (m_rectPlayNow.Height/2);
+
+            m_rectButton.Height = 20;
+            m_rectButton.Width = m_rectPlayNow.Width;
+            m_rectButton.X = (36 / 2) - (m_rectButton.Width / 2);
+            m_rectButton.Y = ((m_rectPlayNow.Y + m_rectPlayNow.Height) + 4);
+
+            
+        }
+
+        protected void InitializeDeadSpaces()
+        {
+            for (int i = 0; i < (TOTAL_PIECES/2); i++)
+            {
+                m_DiedBlackSpaces[i] = new Rectangle((36 + (i * 35)), 0, 35, 35);
+                m_DiedWhiteSpaces[i] = new Rectangle((36 + (i * 35)), (m_rectTable.Height - 35), 35, 35);                  
+            }
         }
 
         /// <summary>
@@ -130,6 +171,11 @@ namespace Xadrez
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
+
+            m_imgPlayNow = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/PlayerNow.png");
+
+            m_imgWhiteButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoBranco.png");
+            m_imgBlackButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoMarrom.png");
 
 			m_soundKlik = Content.Load<SoundEffect>( "Sounds\\KLICK" );
 			m_soundKill = Content.Load<SoundEffect>( "Sounds\\BEEP_FM" );
@@ -251,7 +297,9 @@ namespace Xadrez
                 {
                     bool bKilled = false;
                     if (m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).Piece != null)
+                    {
                         bKilled = true;
+                    }
 
                     Play play = new Play();
                     play.newPosition = ptSquare;
@@ -355,6 +403,25 @@ namespace Xadrez
 
                 DrawGamePieces();
 
+                DrawDiedPieces();
+
+                m_spriteBatch.Draw(m_imgPlayNow,
+                                   m_rectPlayNow,
+                                   Color.Beige);
+                
+                if(m_playTurn == Play_Turn.Black_Turn)
+                    m_spriteBatch.Draw(m_imgBlackButton,
+                                   m_rectButton,
+                                   Color.Beige);
+                else
+                    m_spriteBatch.Draw(m_imgWhiteButton,
+                                   m_rectButton,
+                                   Color.Beige);
+
+
+                                   
+                
+
                                
             }
             m_spriteBatch.End();
@@ -444,6 +511,8 @@ namespace Xadrez
                                 m_gameTable.getTableSquare(7, 7).BoundingBox,
                                 Color.Beige);
 
+            
+
         }
 
         protected void DrawTargets()
@@ -481,6 +550,30 @@ namespace Xadrez
                 }
             }
         }
+
+        protected void DrawDiedPieces()
+        {
+            List<Piece>  listDeadWhitePieces = m_gameTable.GetListDeadWhitePieces();
+            List<Piece>  listDeadBlackPieces = m_gameTable.GetListDeadBlackPieces();
+
+            for (int i = 0; i < listDeadWhitePieces.Count(); i++)
+            {
+                Piece tempPiece = listDeadWhitePieces[i];
+                m_spriteBatch.Draw(tempPiece.SelfImageWhite,
+                                    m_DiedWhiteSpaces[i],
+                                    Color.White);                                                
+            }
+
+            for (int i = 0; i < listDeadBlackPieces.Count(); i++)
+            {
+                Piece tempPiece = listDeadBlackPieces[i];
+                m_spriteBatch.Draw(tempPiece.SelfImageBlack,
+                                    m_DiedBlackSpaces[i],
+                                    Color.White);
+            }
+        }
+
+
 
     }
 }
