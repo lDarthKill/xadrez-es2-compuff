@@ -33,11 +33,13 @@ namespace Xadrez
         Texture2D                   m_imgPlayNow;
         Texture2D                   m_imgWhiteButton;
         Texture2D                   m_imgBlackButton;
+        Texture2D                   m_imgOpenGame;
 
         private Rectangle [ ]       m_DiedBlackSpaces;
         private Rectangle [ ]       m_DiedWhiteSpaces;
         private Rectangle           m_rectPlayNow;
         private Rectangle           m_rectButton;
+        private Rectangle           m_rectOpenGame;
 
         private List<Point>         m_listTargetsMoviments;
         bool                        m_bResetGame;
@@ -51,6 +53,7 @@ namespace Xadrez
 
         int m_updateCounts;
         bool m_bCanBePressed;
+        bool m_bInitGame;
 
 
 
@@ -94,6 +97,7 @@ namespace Xadrez
 
             m_bPieceSelected = false;
             m_bResetGame = true;
+            m_bInitGame = false;
 
             m_bCanBePressed = false;
             m_updateCounts = 0;
@@ -120,6 +124,11 @@ namespace Xadrez
             m_rectButton.X = (36 / 2) - (m_rectButton.Width / 2);
             m_rectButton.Y = ((m_rectPlayNow.Y + m_rectPlayNow.Height) + 4);
 
+
+            m_rectOpenGame.Height = 300;
+            m_rectOpenGame.Width = 400;
+            m_rectOpenGame.X = (m_rectTable.Width / 2) - (m_rectOpenGame.Width/2);
+            m_rectOpenGame.Y = (m_rectTable.Height / 2) - (m_rectOpenGame.Height / 2);
             
         }
 
@@ -177,6 +186,8 @@ namespace Xadrez
             m_imgWhiteButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoBranco.png");
             m_imgBlackButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoMarrom.png");
 
+            m_imgOpenGame = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Abertura.png");
+
 			m_soundKlik = Content.Load<SoundEffect>( "Sounds\\KLICK" );
 			m_soundKill = Content.Load<SoundEffect>( "Sounds\\BEEP_FM" );
 
@@ -203,6 +214,14 @@ namespace Xadrez
             // Allows the game to exit
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed)
                 this.Exit();
+
+            if(Keyboard.GetState().IsKeyDown(Keys.Space))
+            {
+                m_bInitGame = true;
+            }
+
+            if(!m_bInitGame)
+                return;
 
             if (Keyboard.GetState().IsKeyDown(Keys.F10))
             {
@@ -379,6 +398,16 @@ namespace Xadrez
             m_spriteBatch.Begin();
             {
                 m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
+
+                if (!m_bInitGame)
+                {
+                    m_spriteBatch.Draw(m_imgOpenGame,
+                                      m_rectOpenGame,
+                                      Color.Beige);
+
+                    m_spriteBatch.End();
+                    return;
+                }
 
                 if (m_bResetGame)
                 {
