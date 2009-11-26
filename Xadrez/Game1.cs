@@ -420,8 +420,6 @@ namespace Xadrez
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            
-
             m_spriteBatch.Begin();
             {
                 m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
