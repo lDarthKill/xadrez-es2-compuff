@@ -68,7 +68,23 @@ namespace Xadrez
 			public bool hasPiece( )
 			{
 			    return (m_piece != null);
-			}
+            }
+
+            #region ICloneable Members
+            public object Clone()
+            {
+                TableSquare tableSquare = new TableSquare();
+
+                Piece piece = this.Piece;
+
+                if (piece == null)
+                    tableSquare.Piece = null;
+                else
+                    tableSquare.Piece = piece.Clone();
+
+                return (object)tableSquare;
+            }
+            #endregion
         }
 
         static private Texture2D  m_selfImage;
@@ -402,11 +418,8 @@ namespace Xadrez
             {
                 for (int nCol = 0; nCol < TABLE_SIZE; ++nCol)
                 {
-                    Piece piece = this.m_table[nRow, nCol].Piece;
-                    if (piece == null)
-                        table.m_table[nRow, nCol].Piece = piece;
-                    else
-                        table.m_table[nRow, nCol].Piece = piece.Clone();
+                    TableSquare tableSquare = (TableSquare)this.m_table[nRow, nCol].Clone();
+                    table.m_table[nRow, nCol] = tableSquare;
                 }
             }
 
