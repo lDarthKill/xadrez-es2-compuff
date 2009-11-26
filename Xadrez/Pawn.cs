@@ -31,62 +31,77 @@ namespace Xadrez
 		}
 		public
 		override
-		List<Point>
-		getPossiblePositions( )
+		void
+		calculatePossiblePositions( bool _bVerifyCheck )
 		{
-			List<Point> possiblePositions = new List<Point>( );
+			m_vetPossibleMovements.Clear( );
 
-			int iTableLimit = m_parentTable.TableSize - 1;
-
-			//TO DO: Check for "Cheque" conditions
+			int TABLE_LIMIT = ParentTable.TableSize - 1;
 
 			// To check if there's a friend piece on the way
 			Piece friend;
+			Point newPosition;
 
 			if( m_bBlack )
 			{
 				// If the piece is Black it is facing down and it moves from up to down
 
 				// Forward movement
-				if( m_position.X < iTableLimit )
+				if( m_position.X < TABLE_LIMIT )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
 
 					if( friend == null )
 					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y ) );
-
-						if( m_bFirstMove && ( ( m_position.X + 1 ) < iTableLimit ) )
+						newPosition = new Point( m_position.X + 1, m_position.Y );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 						{
-							friend = m_parentTable.getTableSquare( m_position.X + 2, m_position.Y ).Piece;
+							m_vetPossibleMovements.Add( newPosition );
+						}
+
+						if( m_bFirstMove && ( ( m_position.X + 1 ) < TABLE_LIMIT ) )
+						{
+							friend = ParentTable.getTableSquare( m_position.X + 2, m_position.Y ).Piece;
 
 							if( friend == null )
 							{
-								possiblePositions.Add( new Point( m_position.X + 2, m_position.Y ) );
+								newPosition = new Point( m_position.X + 2, m_position.Y );
+								if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+								{
+									m_vetPossibleMovements.Add( newPosition );
+								}
 							}
 						}
 					}
 				}
 
 				// Forward Left movement - in case of eating an enemy
-				if( ( m_position.X < iTableLimit ) && ( m_position.Y > 0 ) )
+				if( ( m_position.X < TABLE_LIMIT ) && ( m_position.Y > 0 ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
 
-					if( ( friend != null ) && !friend.Black )
+					if( ( friend != null ) && !friend.isBlack )
 					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y - 1 ) );
+						newPosition = new Point( m_position.X + 1, m_position.Y - 1 );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+						{
+							m_vetPossibleMovements.Add( newPosition );
+						}
 					}
 				}
 
 				// Forward Right movement - in case of eating an enemy
-				if( ( ( m_position.X < iTableLimit ) && m_position.Y < iTableLimit ) )
+				if( ( ( m_position.X < TABLE_LIMIT ) && m_position.Y < TABLE_LIMIT ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
 
-					if( ( friend != null ) && !friend.Black )
+					if( ( friend != null ) && !friend.isBlack )
 					{
-						possiblePositions.Add( new Point( m_position.X + 1, m_position.Y + 1 ) );
+						newPosition = new Point( m_position.X + 1, m_position.Y + 1 );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+						{
+							m_vetPossibleMovements.Add( newPosition );
+						}
 					}
 				}
 			}
@@ -97,19 +112,27 @@ namespace Xadrez
 				// Forward movement
 				if( m_position.X > 0 )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
 
 					if( friend == null )
 					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y ) );
+						newPosition = new Point( m_position.X - 1, m_position.Y );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+						{
+							m_vetPossibleMovements.Add( newPosition );
+						}
 
 						if( m_bFirstMove && ( ( m_position.X - 1 ) > 0 ) )
 						{
-							friend = m_parentTable.getTableSquare( m_position.X - 2, m_position.Y ).Piece;
+							friend = ParentTable.getTableSquare( m_position.X - 2, m_position.Y ).Piece;
 
 							if( friend == null )
 							{
-								possiblePositions.Add( new Point( m_position.X - 2, m_position.Y ) );
+								newPosition = new Point( m_position.X - 2, m_position.Y );
+								if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+								{
+									m_vetPossibleMovements.Add( newPosition );
+								}
 							}
 						}
 					}
@@ -118,27 +141,35 @@ namespace Xadrez
 				// Forward Left movement - in case of eating an enemy
 				if( ( m_position.X > 0 ) && ( m_position.Y > 0 ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
 
-					if( ( friend != null ) && friend.Black )
+					if( ( friend != null ) && friend.isBlack )
 					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y - 1 ) );
+						newPosition = new Point( m_position.X - 1, m_position.Y - 1 );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+						{
+							m_vetPossibleMovements.Add( newPosition );
+						}
 					}
 				}
 
 				// Forward Right movement - in case of eating an enemy
-				if( ( m_position.X > 0 ) && ( m_position.Y < iTableLimit ) )
+				if( ( m_position.X > 0 ) && ( m_position.Y < TABLE_LIMIT ) )
 				{
-					friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
+					friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
 
-					if( ( friend != null ) && friend.Black )
+					if( ( friend != null ) && friend.isBlack )
 					{
-						possiblePositions.Add( new Point( m_position.X - 1, m_position.Y + 1 ) );
+						newPosition = new Point( m_position.X - 1, m_position.Y + 1 );
+						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+						{
+							m_vetPossibleMovements.Add( newPosition );
+						}
 					}
 				}
 			}
 
-			return possiblePositions;
+			//return possiblePositions;
 		}
 
 		public

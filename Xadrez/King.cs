@@ -19,107 +19,138 @@ namespace Xadrez
 
 		public
 		override
-		List<Point>
-		getPossiblePositions( )
+		void
+		calculatePossiblePositions( bool _bVerifyCheck )
 		{
-			List<Point> possiblePositions = new List<Point>( );
+			m_vetPossibleMovements.Clear( );
 
-			int iTableLimit = m_parentTable.TableSize - 1;
-
-			//TO DO: Check for "Cheque" conditions
+			int TABLE_LIMIT = ParentTable.TableSize - 1;
 
 			// To check if there's a friend piece on the way
 			Piece friend;
+			Point newPosition;
 
 			// Forward movement
-			if( m_position.X < iTableLimit )
+			if( m_position.X < TABLE_LIMIT )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X + 1, m_position.Y ) );
+					newPosition = new Point( m_position.X + 1, m_position.Y );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Backward movement
 			if( m_position.X > 0 )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X - 1, m_position.Y ) );
+					newPosition = new Point( m_position.X - 1, m_position.Y );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Left movement
 			if( m_position.Y > 0 )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X, m_position.Y - 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X, m_position.Y - 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X, m_position.Y - 1 ) );
+					newPosition = new Point( m_position.X, m_position.Y - 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Right movement
-			if( m_position.Y < iTableLimit )
+			if( m_position.Y < TABLE_LIMIT )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X, m_position.Y + 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X, m_position.Y + 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X, m_position.Y + 1 ) );
+					newPosition = new Point( m_position.X, m_position.Y + 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Forward Left movement
-			if( ( m_position.X < iTableLimit ) && ( m_position.Y > 0 ) )
+			if( ( m_position.X < TABLE_LIMIT ) && ( m_position.Y > 0 ) )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y - 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X + 1, m_position.Y - 1 ) );
+					newPosition = new Point( m_position.X + 1, m_position.Y - 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Forward Right movement
-			if( ( ( m_position.X < iTableLimit ) && m_position.Y < iTableLimit ) )
+			if( ( ( m_position.X < TABLE_LIMIT ) && m_position.Y < TABLE_LIMIT ) )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X + 1, m_position.Y + 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X + 1, m_position.Y + 1 ) );
+					newPosition = new Point( m_position.X + 1, m_position.Y + 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Backward Left movement
 			if( ( m_position.X > 0 ) && ( m_position.Y > 0 ) )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y - 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X - 1, m_position.Y - 1 ) );
+					newPosition = new Point( m_position.X - 1, m_position.Y - 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
 			// Backward Right movement
-			if( ( m_position.X > 0 ) && ( m_position.Y < iTableLimit ) )
+			if( ( m_position.X > 0 ) && ( m_position.Y < TABLE_LIMIT ) )
 			{
-				friend = m_parentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
+				friend = ParentTable.getTableSquare( m_position.X - 1, m_position.Y + 1 ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( new Point( m_position.X - 1, m_position.Y + 1 ) );
+					newPosition = new Point( m_position.X - 1, m_position.Y + 1 );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
-			return possiblePositions;
+			//return possiblePositions;
 		}
 
 		public
