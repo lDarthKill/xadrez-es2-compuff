@@ -116,23 +116,23 @@ namespace IA
                     {
                         if (piece is Queen)
                         {
-                            nValue -= 30;
+                            nValue += 30;
                         }
                         else if (piece is Bishop)
                         {
-                            nValue -= 15;
+                            nValue += 15;
                         }
                         else if (piece is Rook)
                         {
-                            nValue -= 10;
+                            nValue += 10;
                         }
                         else if (piece is Knight)
                         {
-                            nValue -= 5;
+                            nValue += 5;
                         }
                         else if (piece is Pawn)
                         {
-                            nValue -= 2;
+                            nValue += 2;
                         }
                     }
                 }

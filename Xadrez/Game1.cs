@@ -102,7 +102,7 @@ namespace Xadrez
             m_bCanBePressed = false;
             m_updateCounts = 0;
 
-            m_playTurn = Play_Turn.Black_Turn;
+            m_playTurn = Play_Turn.White_Turn;
             m_bPlayerBlackCPU = true;
             m_bPlayerWhiteCPU = false;
             m_cpuPlayer = new MiniMax();
@@ -218,6 +218,7 @@ namespace Xadrez
             if(Keyboard.GetState().IsKeyDown(Keys.Space))
             {
                 m_bInitGame = true;
+                m_bCanBePressed = true;
             }
 
             if(!m_bInitGame)
@@ -236,6 +237,9 @@ namespace Xadrez
                 return;
             }
 
+            if (m_bResetGame)
+                return;
+
             if ((m_playTurn == Play_Turn.White_Turn) && (m_bPlayerWhiteCPU))
             {
                 m_cpuPlayer.setTeam(false); // White team.
@@ -250,13 +254,10 @@ namespace Xadrez
 
             if ((m_playTurn == Play_Turn.Black_Turn) && (m_bPlayerBlackCPU))
             {
+                m_cpuPlayer.setTeam(true); // Black team.
                 Play play = m_cpuPlayer.getCPUPlay(m_gameTable);
-                if (play != null)
-                {
-                    m_gameTable.move(play);
-                    m_soundKlik.Play();
-                }
-
+                m_gameTable.move(play);
+                m_soundKlik.Play();
                 changeTurn();
                 base.Update(gameTime);
 
@@ -265,7 +266,7 @@ namespace Xadrez
 
             if ((m_bCanBePressed) && (Mouse.GetState().LeftButton == ButtonState.Pressed))
             {
-                if (m_updateCounts <= 10)
+                if (m_updateCounts <= 26)
                     return;
 
 
