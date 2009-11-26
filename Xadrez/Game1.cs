@@ -156,27 +156,27 @@ namespace Xadrez
             //Loading black and white pieces (on temporary instances - but the images are static)
             Pawn pawn = new Pawn(0,0,false,null);
 			pawn.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png");
-			pawn.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown pawn.png" );
+            pawn.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown pawn.png");
 
             Knight knight = new Knight(0,0,false,null);
 			knight.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png");
-			knight.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown knight.png" );
+            knight.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown knight.png");
 
             Bishop bishop = new Bishop(0,0,false,null);
 			bishop.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png");
-			bishop.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown bishop.png" );
+            bishop.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown bishop.png");
 
             Rook rook = new Rook(0,0,false,null);
 			rook.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png");
-			rook.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown rook.png" );
+            rook.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown rook.png");
 
             King king = new King(0,0,false,null);
 			king.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png");
-			king.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown king.png" );
+            king.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown king.png");
 
             Queen queen = new Queen(0,0,false,null);
 			queen.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png");
-			queen.SelfImageBlack = Texture2D.FromFile( m_graphics.GraphicsDevice, "../../../Content/Textures/brown queen.png" );
+            queen.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown queen.png");
 
             m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
             m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
