@@ -19,14 +19,12 @@ namespace Xadrez
 
 		public
 		override
-		List<Point>
-		getPossiblePositions( )
+		void
+		calculatePossiblePositions( bool _bVerifyCheck )
 		{
-			List<Point> possiblePositions = new List<Point>( );
+			m_vetPossibleMovements.Clear( );
 
-			int iTableLimit = m_parentTable.TableSize - 1;
-
-			//TO DO: Check for "Cheque" conditions
+			int TABLE_LIMIT = ParentTable.TableSize - 1;
 
 			// To check if there's a friend piece on the way
 			Piece friend;
@@ -36,13 +34,16 @@ namespace Xadrez
 			int col = m_position.Y - 1;
 			Point newPosition = new Point( row, col );
 			
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack )) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack )) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -51,13 +52,16 @@ namespace Xadrez
 			col = m_position.Y + 1;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -66,13 +70,16 @@ namespace Xadrez
 			col = m_position.Y - 1;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -81,13 +88,16 @@ namespace Xadrez
 			col = m_position.Y + 1;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -96,13 +106,16 @@ namespace Xadrez
 			col = m_position.Y - 2;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -111,13 +124,16 @@ namespace Xadrez
 			col = m_position.Y - 2;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -126,13 +142,16 @@ namespace Xadrez
 			col = m_position.Y + 2;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
@@ -141,17 +160,20 @@ namespace Xadrez
 			col = m_position.Y + 2;
 			newPosition = new Point( row, col );
 
-			if( m_parentTable.isPtInTable( newPosition ) )
+			if( ParentTable.isPtInTable( newPosition ) )
 			{
-				friend = m_parentTable.getTableSquare( row, col ).Piece;
+				friend = ParentTable.getTableSquare( row, col ).Piece;
 
-				if( !( ( friend != null ) && ( friend.Black == m_bBlack ) ) )
+				if( !( ( friend != null ) && ( friend.isBlack == m_bBlack ) ) )
 				{
-					possiblePositions.Add( newPosition );
+					if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+					{
+						m_vetPossibleMovements.Add( newPosition );
+					}
 				}
 			}
 
-			return possiblePositions;
+			//return possiblePositions;
 		}
 
 		public

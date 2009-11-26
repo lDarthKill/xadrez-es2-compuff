@@ -35,13 +35,13 @@ namespace Xadrez
         Texture2D                   m_imgBlackButton;
         Texture2D                   m_imgOpenGame;
 
-        private Rectangle [ ]       m_DiedBlackSpaces;
-        private Rectangle [ ]       m_DiedWhiteSpaces;
+        private Rectangle [ ]       m_DeadBlackSpaces;
+        private Rectangle [ ]       m_DeadWhiteSpaces;
         private Rectangle           m_rectPlayNow;
         private Rectangle           m_rectButton;
         private Rectangle           m_rectOpenGame;
 
-        private List<Point>         m_listTargetsMoviments;
+        private List<Point>         m_listTargetsMovements;
         bool                        m_bResetGame;
         Play_Turn                   m_playTurn;
         bool                        m_bPlayerBlackCPU;
@@ -91,7 +91,7 @@ namespace Xadrez
             m_graphics.ApplyChanges();
 
 
-            m_listTargetsMoviments = new List<Point>();
+            m_listTargetsMovements = new List<Point>();
 
             m_gameTable = new Table();
 
@@ -108,12 +108,13 @@ namespace Xadrez
             m_cpuPlayer = new MiniMax();
             m_cpuPlayer.setTeam(m_bPlayerBlackCPU); // CPU is with Black pieces.
 
-            m_DiedBlackSpaces = new Rectangle[TOTAL_BLACK_PIECES];
-            m_DiedWhiteSpaces = new Rectangle[TOTAL_WHITE_PIECES];
+            m_DeadBlackSpaces = new Rectangle[TOTAL_BLACK_PIECES];
+            m_DeadWhiteSpaces = new Rectangle[TOTAL_WHITE_PIECES];
 
             InitializeDeadSpaces();
 
-            
+			m_gameTable.calculateWhitePiecesPosition( false );
+
             m_rectPlayNow.Height = 100;
             m_rectPlayNow.Width = 20;
             m_rectPlayNow.X = (36 / 2) - (m_rectPlayNow.Width/2);
@@ -136,8 +137,8 @@ namespace Xadrez
         {
             for (int i = 0; i < (TOTAL_PIECES/2); i++)
             {
-                m_DiedBlackSpaces[i] = new Rectangle((36 + (i * 35)), 0, 35, 35);
-                m_DiedWhiteSpaces[i] = new Rectangle((36 + (i * 35)), (m_rectTable.Height - 35), 35, 35);                  
+                m_DeadBlackSpaces[i] = new Rectangle((36 + (i * 35)), 0, 35, 35);
+                m_DeadWhiteSpaces[i] = new Rectangle((36 + (i * 35)), (m_rectTable.Height - 35), 35, 35);                  
             }
         }
 
@@ -246,8 +247,17 @@ namespace Xadrez
                 Play play = m_cpuPlayer.getCPUPlay(m_gameTable);
                 m_gameTable.move(play);
                 m_soundKlik.Play();
-                changeTurn();
-                base.Update(gameTime);
+				
+				if( m_gameTable.CheckMate )
+				{
+					m_bInitGame = false;
+				}
+				else
+				{
+					changeTurn( );
+				}
+                
+				base.Update(gameTime);
 
                 return;
             }
@@ -258,8 +268,17 @@ namespace Xadrez
                 Play play = m_cpuPlayer.getCPUPlay(m_gameTable);
                 m_gameTable.move(play);
                 m_soundKlik.Play();
-                changeTurn();
-                base.Update(gameTime);
+
+				if( m_gameTable.CheckMate )
+				{
+					m_bInitGame = false;
+				}
+				else
+				{
+					changeTurn( );
+				}
+                
+				base.Update(gameTime);
 
                 return;
             }
@@ -282,10 +301,17 @@ namespace Xadrez
                 {
                     m_pointSquareSelection.X = -1;
                     m_pointSquareSelection.Y = -1;
-                    m_listTargetsMoviments.Clear();
+                    m_listTargetsMovements = null;
                     m_bPieceSelected = false;
 
-                    changeTurn();
+					if( m_gameTable.CheckMate )
+					{
+						m_bInitGame = false;
+					}
+					else
+					{
+						changeTurn( );
+					}
                     
                     base.Update(gameTime);
 
@@ -302,15 +328,15 @@ namespace Xadrez
 
         protected bool ClickOnTarget(Rectangle rectMouse)
         {
-            if (m_listTargetsMoviments == null)
+            if (m_listTargetsMovements == null)
                 return false;
 
-            if (m_listTargetsMoviments.Count == 0)
+            if (m_listTargetsMovements.Count == 0)
                 return false;
 
-            for (int index = 0; index < m_listTargetsMoviments.Count; index++ )
+            for (int index = 0; index < m_listTargetsMovements.Count; index++ )
             {
-                Point ptSquare = m_listTargetsMoviments[index];
+                Point ptSquare = m_listTargetsMovements[index];
                 Rectangle rectTarget = m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).BoundingBox;
 
                 if(rectTarget.Intersects(rectMouse) )
@@ -341,7 +367,7 @@ namespace Xadrez
         protected bool ClickOnPiece(Rectangle rectMouse)
         {
             m_bPieceSelected = false;
-            m_listTargetsMoviments.Clear();
+            m_listTargetsMovements = null;
 
             for (int line = 0; line <= 7; line++)
             {
@@ -355,12 +381,12 @@ namespace Xadrez
                         switch(m_playTurn)
                         {
                             case Play_Turn.Black_Turn:
-                                if (!(m_gameTable.getTableSquare(line, colunm).Piece.Black))
+                                if (!(m_gameTable.getTableSquare(line, colunm).Piece.isBlack))
                                     return false;
                                 break;
 
                             case Play_Turn.White_Turn:
-                                if (m_gameTable.getTableSquare(line, colunm).Piece.Black)
+                                if (m_gameTable.getTableSquare(line, colunm).Piece.isBlack)
                                     return false;
                                 break;
                         }
@@ -370,7 +396,7 @@ namespace Xadrez
                         m_pointSquareSelection.Y = colunm;
 
                         
-                        m_listTargetsMoviments = m_gameTable.getTableSquare(line, colunm).Piece.getPossiblePositions();
+                        m_listTargetsMovements = m_gameTable.getTableSquare(line, colunm).Piece.vetPossibleMovements;
                     }
                 }
             }
@@ -425,7 +451,7 @@ namespace Xadrez
                                        m_gameTable.getTableSquare(m_pointSquareSelection.X, m_pointSquareSelection.Y).BoundingBox,
                                        Color.Beige);
 
-                    if (m_listTargetsMoviments.Count > 0)
+                    if (m_listTargetsMovements.Count > 0)
                     {
                         DrawTargets();
                     }
@@ -433,7 +459,7 @@ namespace Xadrez
 
                 DrawGamePieces();
 
-                DrawDiedPieces();
+                DrawDeadPieces();
 
                 m_spriteBatch.Draw(m_imgPlayNow,
                                    m_rectPlayNow,
@@ -547,9 +573,9 @@ namespace Xadrez
 
         protected void DrawTargets()
         {
-            for (int index = 0; index < m_listTargetsMoviments.Count; index++)
+            for (int index = 0; index < m_listTargetsMovements.Count; index++)
             {
-                Point ptSquare = m_listTargetsMoviments[index];
+                Point ptSquare = m_listTargetsMovements[index];
                 m_spriteBatch.Draw(m_maskSelectionTarget,
                                     m_gameTable.getTableSquare(ptSquare.X, ptSquare.Y).BoundingBox,
                                     Color.Beige);
@@ -564,7 +590,7 @@ namespace Xadrez
                 {
                     if (m_gameTable.getTableSquare(line, colunm).Piece == null)
                         continue;
-                    if(m_gameTable.getTableSquare(line, colunm).Piece.Black)
+                    if(m_gameTable.getTableSquare(line, colunm).Piece.isBlack)
                     {
                         m_spriteBatch.Draw(m_gameTable.getTableSquare(line, colunm).Piece.SelfImageBlack,
                                             m_gameTable.getTableSquare(line, colunm).BoundingBox,
@@ -581,7 +607,7 @@ namespace Xadrez
             }
         }
 
-        protected void DrawDiedPieces()
+        protected void DrawDeadPieces()
         {
             List<Piece>  listDeadWhitePieces = m_gameTable.GetListDeadWhitePieces();
             List<Piece>  listDeadBlackPieces = m_gameTable.GetListDeadBlackPieces();
@@ -590,7 +616,7 @@ namespace Xadrez
             {
                 Piece tempPiece = listDeadWhitePieces[i];
                 m_spriteBatch.Draw(tempPiece.SelfImageWhite,
-                                    m_DiedWhiteSpaces[i],
+                                    m_DeadWhiteSpaces[i],
                                     Color.White);                                                
             }
 
@@ -598,7 +624,7 @@ namespace Xadrez
             {
                 Piece tempPiece = listDeadBlackPieces[i];
                 m_spriteBatch.Draw(tempPiece.SelfImageBlack,
-                                    m_DiedBlackSpaces[i],
+                                    m_DeadBlackSpaces[i],
                                     Color.White);
             }
         }

@@ -89,7 +89,7 @@ namespace IA
                     if (piece == null)
                         continue;
 
-                    if (m_bBlack != piece.Black)
+                    if (m_bBlack != piece.isBlack)
                     {
                         if (piece is Queen)
                         {
@@ -156,10 +156,10 @@ namespace IA
                         continue;
 
                     // Verify if the piece is mine.
-                    if (tableSquare.Piece.Black != m_bTeamTemp)
+                    if (tableSquare.Piece.isBlack != m_bTeamTemp)
                         continue;
                     
-                    List<Point> lstPositions = tableSquare.Piece.getPossiblePositions();
+                    List<Point> lstPositions = tableSquare.Piece.vetPossibleMovements;
                     foreach (Point position in lstPositions)
                     {
                         Play play = new Play();

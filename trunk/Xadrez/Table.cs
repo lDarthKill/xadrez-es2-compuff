@@ -8,15 +8,15 @@ using Xadrez;
 
 namespace Xadrez
 {
-    public class Table: ICloneable
+    public class Table : ICloneable
     {
         // Definitions
 		const bool BLACK = true;
 		const bool WHITE = false;
 		const int TABLE_SIZE = 8;
 
-	
-		public class TableSquare // Squares of a table. Can hold a piece (or not).
+
+		public class TableSquare : ICloneable // Squares of a table. Can hold a piece (or not).
         {
             // Private members
 			private Piece m_piece;
@@ -73,30 +73,37 @@ namespace Xadrez
             #region ICloneable Members
             public object Clone()
             {
-                TableSquare tableSquare = new TableSquare();
+				TableSquare tableSquare = ( TableSquare )this.MemberwiseClone( );
+				tableSquare.m_piece = null;
 
-                Piece piece = this.Piece;
-
-                if (piece == null)
-                    tableSquare.Piece = null;
-                else
-                    tableSquare.Piece = piece.Clone();
-
-                return (object)tableSquare;
+				return ( object )tableSquare;
             }
             #endregion
         }
 
         static private Texture2D  m_selfImage;
         private TableSquare[ , ]  m_table;
+		private List< Piece >     m_vecBlackPieces;
 		private List< Piece >     m_vecDeadBlackPieces;
-        private List< Piece >     m_vecDeadWhitePieces;
+		private List< Piece >     m_vecWhitePieces;
+		private List< Piece >     m_vecDeadWhitePieces;
+
+		private bool			  m_bCheck;
+		private bool			  m_bCheckMate;
+
+		private bool			  m_bVerifyCheck;
 
 		public Table( )
 		{
 			m_table = new TableSquare[ TABLE_SIZE, TABLE_SIZE ];
-            m_vecDeadBlackPieces = new List<Piece>( );
+			m_vecBlackPieces = new List<Piece>( );
+			m_vecDeadBlackPieces = new List<Piece>( );
+			m_vecWhitePieces = new List<Piece>( );
             m_vecDeadWhitePieces = new List<Piece>( );
+
+			m_bCheck = false;
+			m_bCheckMate = false;
+			m_bVerifyCheck = true;
 
 			initTable( );
         }
@@ -114,34 +121,42 @@ namespace Xadrez
 			piece = new Rook( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
             m_table[nRow, nCol] = new TableSquare( piece, boundingBox );
+			m_vecBlackPieces.Add( piece );
             ++nCol;
 			piece = new Knight( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new Bishop( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new Queen( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new King( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new Bishop( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new Knight( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
 			piece = new Rook( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
+			m_vecBlackPieces.Add( piece );
 
             // Second row - Black - Pawns
             ++nRow;
@@ -150,7 +165,8 @@ namespace Xadrez
 				piece = new Pawn( nRow, nCol, BLACK, this );
 				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            }
+				m_vecBlackPieces.Add( piece );
+			}
 
 			// Third to sixth rows - Empty
 			piece = null;
@@ -169,6 +185,7 @@ namespace Xadrez
 				piece = new Pawn( nRow, nCol, WHITE, this );
 				boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 				m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
+				m_vecWhitePieces.Add( piece );
 			}
 
 			nRow++;
@@ -179,35 +196,42 @@ namespace Xadrez
 			piece = new Rook( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Knight( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Bishop( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Queen( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new King( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Bishop( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Knight( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-            ++nCol;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
 			piece = new Rook( nRow, nCol, WHITE, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
 			m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
-
+			m_vecWhitePieces.Add( piece );
         }
 
 		public TableSquare getTableSquare( int nRow, int nCol )
@@ -242,19 +266,18 @@ namespace Xadrez
 			}
 
 			// Now we double check if this play is possible
-			List<Point> possibleMoves = oldSquare.Piece.getPossiblePositions( );
-			if( !possibleMoves.Contains( _play.newPosition ) )
-			{
-				// Trying to make a move to an invalid position
-				return false;
-			}
+			//if( !oldSquare.Piece.vetPossibleMovements.Contains( _play.newPosition ) )
+			//{
+			//    // Trying to make a move to an invalid position
+			//    return false;
+			//}
 
 			if( newSquare.Piece != null )
 			{
 				// Check if a piece is eaten
 				pieceEaten = newSquare.Piece;
 
-				if( oldSquare.Piece.Black == pieceEaten.Black )
+				if( oldSquare.Piece.isBlack == pieceEaten.isBlack )
 				{
 					// Trying to eat a piece of your own team
 					return false;
@@ -272,10 +295,37 @@ namespace Xadrez
 			{
 				pieceEaten.SetPosition( -1, -1 );
 
-				if( pieceEaten.Black )
+				if( pieceEaten.isBlack )
+				{
+					m_vecBlackPieces.Remove( pieceEaten );
 					m_vecDeadBlackPieces.Add( pieceEaten );
+				}
 				else
+				{
+					m_vecWhitePieces.Remove( pieceEaten );
 					m_vecDeadWhitePieces.Add( pieceEaten );
+				}
+
+				if( pieceEaten is King )
+					m_bCheckMate = true;
+			}
+
+			// Calculate the next possible movements
+			if( newSquare.Piece.isBlack )
+			{
+				//calculateBlackPiecesPosition( false );
+				calculateWhitePiecesPosition( m_bVerifyCheck );
+			}
+			else
+			{
+				//calculateWhitePiecesPosition( false );
+				calculateBlackPiecesPosition( m_bVerifyCheck );
+			}
+
+			// Verify if the game is over (checkmate)
+			if( m_bVerifyCheck )
+			{
+				m_bCheckMate = isInCheckMate( !newSquare.Piece.isBlack );
 			}
 
 		    return true;
@@ -291,12 +341,89 @@ namespace Xadrez
             return true;
         }
 
-        public bool IsInCheckMate(bool bBlack)
-        {
-            throw new NotImplementedException();
-        }
+		public bool isInCheck( bool _bBlack )
+		{
+			List<Piece> vecPiecesEnemy;		// Will get the enemy's king position from this list <- to verify if it is in check
+			List<Piece> vecPiecesCurrent;	// Will verify if any of the current player's pieces threatens the enemy king
+			if( _bBlack )
+			{
+				vecPiecesEnemy = m_vecBlackPieces;     // <- Verify if the Black king is in check
+				vecPiecesCurrent = m_vecWhitePieces;
+			}
+			else
+			{
+				vecPiecesEnemy = m_vecWhitePieces;     // <- Verify if the White king is in check
+				vecPiecesCurrent = m_vecBlackPieces;
+			}
+	
+			// Retrieves the enemy's king position
+			Point ptEnemyKing = new Point( );
+			for( int i = 0; i < vecPiecesEnemy.Count; i++ )
+			{
+				Piece currentPiece = vecPiecesEnemy[ i ];
+				if( currentPiece is King )
+				{
+					ptEnemyKing = currentPiece.Position;
+					break;
+				}
+			}
 
-		static public Table operator +(Table table, Play play)
+			// Now goes through every piece of the current player to see if any of them threatens the enemy king
+			for( int i = 0; i < vecPiecesCurrent.Count; i++ )
+			{
+				if( vecPiecesCurrent[ i ].vetPossibleMovements.Contains( ptEnemyKing ) )
+				{
+					return true;
+				}
+			}
+
+			return false;
+		}
+
+		private bool isInCheckMate( bool _bBlack )
+        {
+			List<Piece> vecPieces;		// Verify if the enemy (_bBlack) can move any piece to avoid the checkmate
+			if( _bBlack )
+			{
+				vecPieces = m_vecBlackPieces;
+			}
+			else
+			{
+				vecPieces = m_vecWhitePieces;
+			}
+
+			// If the enemy player can't move any piece (to defend his king), then he's in checkmate
+			for( int i = 0; i < vecPieces.Count; i++ )
+			{
+				Piece currentPiece = vecPieces[ i ];
+				
+				List<Point> possibleMoves = currentPiece.vetPossibleMovements;
+				if( possibleMoves.Count > 0 )
+				{
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		public void calculateBlackPiecesPosition( bool _bVerifyCheck )
+		{
+			for( int i = 0; i < m_vecBlackPieces.Count; i++ )
+			{
+				m_vecBlackPieces[ i ].calculatePossiblePositions( _bVerifyCheck );
+			}
+		}
+
+		public void calculateWhitePiecesPosition( bool _bVerifyCheck )
+		{
+			for( int i = 0; i < m_vecWhitePieces.Count; i++ )
+			{
+				m_vecWhitePieces[ i ].calculatePossiblePositions( _bVerifyCheck );
+			}
+		}
+
+		static public Table operator +( Table table, Play play )
 		{
 		    // return a copy of the table modified with the play.
             Table newTable = (Table)table.Clone();
@@ -384,6 +511,49 @@ namespace Xadrez
 			}
 		}
 
+		public
+		bool
+		Check
+		{
+			get
+			{
+				return m_bCheck;
+			}
+
+			//set
+			//{
+			//    m_bCheck = value;
+			//}
+		}
+
+		public
+		bool
+		CheckMate
+		{
+			get
+			{
+				return m_bCheckMate;
+			}
+
+			//set
+			//{
+			//    m_bCheckMate = value;
+			//}
+		}
+
+		public bool VerifyCheck
+		{
+			get
+			{
+				return m_bVerifyCheck;
+			}
+
+			set
+			{
+				m_bVerifyCheck = value;
+			}
+		}
+
 		static public 
         void SetSelfImage(Texture2D _texture)
         {
@@ -413,17 +583,54 @@ namespace Xadrez
 
         public object Clone()
         {
-            Table table = new Table();
-            for (int nRow = 0; nRow < TABLE_SIZE; ++nRow)
+			//Table table = ( Table )this.MemberwiseClone( );
+			//table.VerifyCheck = this.VerifyCheck;
+			Table table = ( Table )this.MemberwiseClone( );
+
+			table.m_table = new TableSquare[ TABLE_SIZE, TABLE_SIZE ];
+			for( int nRow = 0; nRow < TABLE_SIZE; ++nRow )
             {
                 for (int nCol = 0; nCol < TABLE_SIZE; ++nCol)
                 {
-                    TableSquare tableSquare = (TableSquare)this.m_table[nRow, nCol].Clone();
-                    table.m_table[nRow, nCol] = tableSquare;
+                    table.m_table[nRow, nCol] = ( TableSquare )this.m_table[ nRow, nCol ].Clone( );
                 }
             }
 
-            return (object)table;
+			table.m_vecBlackPieces = new List<Piece>( );
+			for( int i = 0; i < this.m_vecBlackPieces.Count; i++ )
+			{
+				Piece newPiece = ( Piece )this.m_vecBlackPieces[ i ].Clone( );
+				newPiece.ParentTable = table;
+				table.m_vecBlackPieces.Add( newPiece );
+				table.m_table[ newPiece.Position.X, newPiece.Position.Y ].Piece = newPiece;
+			}
+
+			table.m_vecWhitePieces = new List<Piece>( );
+			for( int i = 0; i < this.m_vecWhitePieces.Count; i++ )
+			{
+				Piece newPiece = ( Piece )this.m_vecWhitePieces[ i ].Clone( );
+				newPiece.ParentTable = table;
+				table.m_vecWhitePieces.Add( newPiece );
+				table.m_table[ newPiece.Position.X, newPiece.Position.Y ].Piece = newPiece;
+			}
+
+			table.m_vecDeadBlackPieces = new List<Piece>( );
+			for( int i = 0; i < this.m_vecDeadBlackPieces.Count; i++ )
+			{
+				Piece newPiece = ( Piece )this.m_vecDeadBlackPieces[ i ].Clone( );
+				newPiece.ParentTable = table;
+				table.m_vecDeadBlackPieces.Add( newPiece );
+			}
+
+			table.m_vecDeadWhitePieces = new List<Piece>( );
+			for( int i = 0; i < this.m_vecDeadWhitePieces.Count; i++ )
+			{
+				Piece newPiece = ( Piece )this.m_vecDeadWhitePieces[ i ].Clone( );
+				newPiece.ParentTable = table;
+				table.m_vecDeadWhitePieces.Add( newPiece );
+			}
+
+			return ( object )table;
         }
 
         #endregion

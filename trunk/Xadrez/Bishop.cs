@@ -19,34 +19,37 @@ namespace Xadrez
 
 		public
 		override
-		List<Point>
-		getPossiblePositions( )
+		void
+		calculatePossiblePositions( bool _bVerifyCheck )
 		{
-			List<Point> possiblePositions = new List<Point>( );
+			m_vetPossibleMovements.Clear( );
 
-			int iTableLimit = m_parentTable.TableSize - 1;
-
-			//TO DO: Check for "Cheque" conditions
+			int TABLE_LIMIT = m_parentTable.TableSize - 1;
 
 			// To check if there's a friend piece on the way
 			Piece friend;
+			Point newPosition;
 
 			int row;
 			int col;
 
 			// Forward Left movement
-			for( row = m_position.X, col = m_position.Y; ( row < iTableLimit ) && ( col > 0 ); row++, col-- )
+			for( row = m_position.X, col = m_position.Y; ( row < TABLE_LIMIT ) && ( col > 0 ); row++, col-- )
 			{
 				friend = m_parentTable.getTableSquare( row + 1, col - 1 ).Piece;
 
-				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack == m_bBlack ) )
 				{
 					break;
 				}
 
-				possiblePositions.Add( new Point( row + 1, col - 1 ) );
+				newPosition = new Point( row + 1, col - 1 );
+				if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+				{
+					m_vetPossibleMovements.Add( newPosition );
+				}
 
-				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
 					break;
 				}
@@ -54,18 +57,22 @@ namespace Xadrez
 			}
 
 			// Forward Right movement
-			for( row = m_position.X, col = m_position.Y; ( row < iTableLimit ) && ( col < iTableLimit ); row++, col++ )
+			for( row = m_position.X, col = m_position.Y; ( row < TABLE_LIMIT ) && ( col < TABLE_LIMIT ); row++, col++ )
 			{
 				friend = m_parentTable.getTableSquare( row + 1, col + 1 ).Piece;
 
-				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack == m_bBlack ) )
 				{
 					break;
 				}
 
-				possiblePositions.Add( new Point( row + 1, col + 1 ) );
+				newPosition = new Point( row + 1, col + 1 );
+				if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+				{
+					m_vetPossibleMovements.Add( newPosition );
+				}
 
-				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
 					break;
 				}
@@ -76,38 +83,46 @@ namespace Xadrez
 			{
 				friend = m_parentTable.getTableSquare( row - 1, col - 1 ).Piece;
 
-				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack == m_bBlack ) )
 				{
 					break;
 				}
 
-				possiblePositions.Add( new Point( row - 1, col - 1 ) );
+				newPosition = new Point( row - 1, col - 1 );
+				if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+				{
+					m_vetPossibleMovements.Add( newPosition );
+				}
 
-				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
 					break;
 				}
 			}
 
 			// Backward Right movement
-			for( row = m_position.X, col = m_position.Y; ( row > 0 ) && ( col < iTableLimit ); row--, col++ )
+			for( row = m_position.X, col = m_position.Y; ( row > 0 ) && ( col < TABLE_LIMIT ); row--, col++ )
 			{
 				friend = m_parentTable.getTableSquare( row - 1, col + 1 ).Piece;
 
-				if( ( friend != null ) && ( friend.Black == m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack == m_bBlack ) )
 				{
 					break;
 				}
 
-				possiblePositions.Add( new Point( row - 1, col + 1 ) );
+				newPosition = new Point( row - 1, col + 1 );
+				if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
+				{
+					m_vetPossibleMovements.Add( newPosition );
+				}
 
-				if( ( friend != null ) && ( friend.Black != m_bBlack ) )
+				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
 					break;
 				}
 			}
 
-			return possiblePositions;
+			//return possiblePositions;
 		}
 
 		public
