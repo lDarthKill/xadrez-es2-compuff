@@ -93,9 +93,6 @@ namespace Xadrez
 
         public Piece Clone()
         {
-            if (this == null)
-                return null;
-
             return (Piece)this.MemberwiseClone();
         }
 		

@@ -10,6 +10,7 @@ namespace IA
     class MiniMax
     {
         private bool    m_bBlack;
+        private bool    m_bTeamTemp;
         private Table   m_winnerTable;
         
         public MiniMax()
@@ -23,7 +24,7 @@ namespace IA
 
         public Play getCPUPlay(Table table)
         {
-            negamax(table, 1);
+            negamax(table, 2);
             if (m_winnerTable == null)
                 return null;
 
@@ -41,6 +42,11 @@ namespace IA
             }
             else
             {
+                if ((depth % 2) == 1)
+                    m_bTeamTemp = m_bBlack;
+                else
+                    m_bTeamTemp = !m_bBlack;
+
                 int alpha = int.MinValue;
                 List<Table> lstTables = generateTables(table);
                 foreach (Table childTable in lstTables)
@@ -106,6 +112,29 @@ namespace IA
                             nValue += 5;
                         }
                     }
+                    else
+                    {
+                        if (piece is Queen)
+                        {
+                            nValue -= 30;
+                        }
+                        else if (piece is Bishop)
+                        {
+                            nValue -= 15;
+                        }
+                        else if (piece is Rook)
+                        {
+                            nValue -= 10;
+                        }
+                        else if (piece is Knight)
+                        {
+                            nValue -= 5;
+                        }
+                        else if (piece is Pawn)
+                        {
+                            nValue -= 2;
+                        }
+                    }
                 }
             }
 
@@ -127,7 +156,7 @@ namespace IA
                         continue;
 
                     // Verify if the piece is mine.
-                    if (tableSquare.Piece.Black != m_bBlack)
+                    if (tableSquare.Piece.Black != m_bTeamTemp)
                         continue;
                     
                     List<Point> lstPositions = tableSquare.Piece.getPossiblePositions();
