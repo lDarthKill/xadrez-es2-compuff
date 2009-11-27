@@ -167,44 +167,85 @@ namespace Xadrez
             m_spriteBatch = new SpriteBatch(GraphicsDevice);
 
             //Loading table
-            Table.SetSelfImage(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
+            //Table.SetSelfImage(Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/table.png"));
+
+            //Loading black and white pieces (on temporary instances - but the images are static)
+            //Pawn pawn = new Pawn(0,0,false,null);
+            //pawn.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png");
+            //pawn.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown pawn.png");
+
+            //Knight knight = new Knight(0,0,false,null);
+            //knight.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png");
+            //knight.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown knight.png");
+
+            //Bishop bishop = new Bishop(0,0,false,null);
+            //bishop.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png");
+            //bishop.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown bishop.png");
+
+            //Rook rook = new Rook(0,0,false,null);
+            //rook.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png");
+            //rook.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown rook.png");
+
+            //King king = new King(0,0,false,null);
+            //king.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png");
+            //king.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown king.png");
+
+            //Queen queen = new Queen(0,0,false,null);
+            //queen.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png");
+            //queen.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown queen.png");
+
+            //m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
+            //m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
+
+            //m_imgPlayNow = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/PlayerNow.png");
+
+            //m_imgWhiteButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoBranco.png");
+            //m_imgBlackButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoMarrom.png");
+
+            //m_imgOpenGame = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Abertura.png");
+            //m_imgBlackWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner Brown.png");
+            //m_imgWhiteWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner White.png");
+
+            Table.SetSelfImage(Content.Load<Texture2D>("Texture//table"));
 
             //Loading black and white pieces (on temporary instances - but the images are static)
             Pawn pawn = new Pawn(0,0,false,null);
-			pawn.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white pawn.png");
-            pawn.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown pawn.png");
+            pawn.SelfImageWhite = Content.Load<Texture2D>("Texture//white pawn");
+            pawn.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown pawn");
 
             Knight knight = new Knight(0,0,false,null);
-			knight.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white knight.png");
-            knight.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown knight.png");
+            knight.SelfImageWhite = Content.Load<Texture2D>("Texture//white knight");
+            knight.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown knight");
 
             Bishop bishop = new Bishop(0,0,false,null);
-			bishop.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white bishop.png");
-            bishop.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown bishop.png");
+            bishop.SelfImageWhite = Content.Load<Texture2D>("Texture//white bishop");
+            bishop.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown bishop");
 
             Rook rook = new Rook(0,0,false,null);
-			rook.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white rook.png");
-            rook.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown rook.png");
+            rook.SelfImageWhite = Content.Load<Texture2D>("Texture//white rook");
+            rook.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown rook");
 
             King king = new King(0,0,false,null);
-			king.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white king.png");
-            king.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown king.png");
+            king.SelfImageWhite = Content.Load<Texture2D>("Texture//white king");
+            king.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown king");
 
             Queen queen = new Queen(0,0,false,null);
-			queen.SelfImageWhite = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/white queen.png");
-            queen.SelfImageBlack = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/light_brown queen.png");
+            queen.SelfImageWhite = Content.Load<Texture2D>("Texture//white queen");
+            queen.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown queen");
 
-            m_maskSelection = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/selection3.png");
-            m_maskSelectionTarget = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/targetSelections.png");
+            m_maskSelection = Content.Load<Texture2D>("Texture//selection3");
+            m_maskSelectionTarget = Content.Load<Texture2D>("Texture//targetSelections");
 
-            m_imgPlayNow = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/PlayerNow.png");
+            m_imgPlayNow = Content.Load<Texture2D>("Texture//PlayerNow");
 
-            m_imgWhiteButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoBranco.png");
-            m_imgBlackButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoMarrom.png");
+            m_imgWhiteButton = Content.Load<Texture2D>("Texture//BotãoBranco");
+            m_imgBlackButton = Content.Load<Texture2D>("Texture//BotãoMarrom");
 
-            m_imgOpenGame = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Abertura.png");
-            m_imgBlackWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner Brown.png");
-            m_imgWhiteWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner White.png");
+            m_imgOpenGame = Content.Load<Texture2D>("Texture//Abertura");
+            m_imgBlackWinner = Content.Load<Texture2D>("Texture//Winner Brown");
+            m_imgWhiteWinner = Content.Load<Texture2D>("Texture//Winner White");
+
+            
 
 			m_soundKlik = Content.Load<SoundEffect>( "Sounds\\KLICK" );
 			m_soundKill = Content.Load<SoundEffect>( "Sounds\\BEEP_FM" );
