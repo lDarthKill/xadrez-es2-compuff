@@ -520,10 +520,10 @@ namespace Xadrez
 				return m_bCheck;
 			}
 
-			//set
-			//{
-			//    m_bCheck = value;
-			//}
+			set
+			{
+				m_bCheck = value;
+			}
 		}
 
 		public

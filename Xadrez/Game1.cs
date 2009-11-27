@@ -80,6 +80,7 @@ namespace Xadrez
             m_graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+			Window.Title = "Xadrez G5";
         }
         /// <summary>
         /// Allows the game to perform any initialization it needs to before starting to run.
@@ -569,39 +570,49 @@ namespace Xadrez
                     
             }
 
-            if (!m_bInitGame)
-            {
-                switch (m_stateSplash)
-                {
-                    case SPLASH_STATES.OPEN:
-                        {
-                            m_spriteBatch.Draw(m_imgOpenGame,
-                                              m_rectSplashScreens,
-                                              Color.Beige);
-                        }
-                        break;
+			if( !m_bInitGame )
+			{
+				switch( m_stateSplash )
+				{
+					case SPLASH_STATES.OPEN:
+						{
+							m_spriteBatch.Draw( m_imgOpenGame,
+											  m_rectSplashScreens,
+											  Color.Beige );
 
-                    case SPLASH_STATES.WINNER_BLACK:
-                        {
-                            m_spriteBatch.Draw(m_imgBlackWinner,
-                                              m_rectSplashScreens,
-                                              Color.Beige);
-                        }
-                        break;
+							Window.Title = "Xadrez G5 - Welcome!";
+						}
+						break;
 
-                    case SPLASH_STATES.WINNER_WHITE:
-                        {
-                            m_spriteBatch.Draw(m_imgWhiteWinner,
-                                              m_rectSplashScreens,
-                                              Color.Beige);
-                        }
-                        break;
+					case SPLASH_STATES.WINNER_BLACK:
+						{
+							m_spriteBatch.Draw( m_imgBlackWinner,
+											  m_rectSplashScreens,
+											  Color.Beige );
 
-                }
+							Window.Title = "Xadrez G5 - Checkmate!";
+						}
+						break;
 
-                //m_spriteBatch.End();
-                //return;
-            }
+					case SPLASH_STATES.WINNER_WHITE:
+						{
+							m_spriteBatch.Draw( m_imgWhiteWinner,
+											  m_rectSplashScreens,
+											  Color.Beige );
+
+							Window.Title = "Xadrez G5 - Checkmate!";
+						}
+						break;
+
+				}
+
+				//m_spriteBatch.End();
+				//return;
+			}
+			else
+			{
+				Window.Title = "Xadrez G5";
+			}
 
             m_spriteBatch.End();
 

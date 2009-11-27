@@ -58,6 +58,10 @@ namespace Xadrez
 						{
 							m_vetPossibleMovements.Add( newPosition );
 						}
+						else
+						{
+							m_parentTable.Check = true;
+						}
 
 						if( m_bFirstMove && ( ( m_position.X + 1 ) < TABLE_LIMIT ) )
 						{
@@ -69,6 +73,10 @@ namespace Xadrez
 								if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 								{
 									m_vetPossibleMovements.Add( newPosition );
+								}
+								else
+								{
+									m_parentTable.Check = true;
 								}
 							}
 						}
@@ -87,6 +95,10 @@ namespace Xadrez
 						{
 							m_vetPossibleMovements.Add( newPosition );
 						}
+						else
+						{
+							m_parentTable.Check = true;
+						}
 					}
 				}
 
@@ -101,6 +113,10 @@ namespace Xadrez
 						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 						{
 							m_vetPossibleMovements.Add( newPosition );
+						}
+						else
+						{
+							m_parentTable.Check = true;
 						}
 					}
 				}
@@ -121,6 +137,10 @@ namespace Xadrez
 						{
 							m_vetPossibleMovements.Add( newPosition );
 						}
+						else
+						{
+							m_parentTable.Check = true;
+						}
 
 						if( m_bFirstMove && ( ( m_position.X - 1 ) > 0 ) )
 						{
@@ -132,6 +152,10 @@ namespace Xadrez
 								if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 								{
 									m_vetPossibleMovements.Add( newPosition );
+								}
+								else
+								{
+									m_parentTable.Check = true;
 								}
 							}
 						}
@@ -150,6 +174,10 @@ namespace Xadrez
 						{
 							m_vetPossibleMovements.Add( newPosition );
 						}
+						else
+						{
+							m_parentTable.Check = true;
+						}
 					}
 				}
 
@@ -164,6 +192,10 @@ namespace Xadrez
 						if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 						{
 							m_vetPossibleMovements.Add( newPosition );
+						}
+						else
+						{
+							m_parentTable.Check = true;
 						}
 					}
 				}
