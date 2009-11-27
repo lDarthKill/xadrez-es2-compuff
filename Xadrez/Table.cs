@@ -120,7 +120,7 @@ namespace Xadrez
             // First row - Black - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
 			piece = new Rook( nRow, nCol, BLACK, this );
 			boundingBox = new Rectangle( ( 36 + ( nCol * 71 ) ), ( 35 + ( nRow * 71 ) ), 71, 71 );
-            m_table[nRow, nCol] = new TableSquare( piece, boundingBox );
+            m_table[ nRow, nCol ] = new TableSquare( piece, boundingBox );
 			m_vecBlackPieces.Add( piece );
             ++nCol;
 			piece = new Knight( nRow, nCol, BLACK, this );
@@ -577,6 +577,121 @@ namespace Xadrez
         {
             return m_vecDeadWhitePieces;
         }
+
+		public
+		void
+		resetTable( )
+		{
+			m_vecBlackPieces = new List<Piece>( );
+			m_vecDeadBlackPieces = new List<Piece>( );
+			m_vecWhitePieces = new List<Piece>( );
+			m_vecDeadWhitePieces = new List<Piece>( );
+
+			m_bCheck = false;
+			m_bCheckMate = false;
+			m_bVerifyCheck = true;
+
+			int nRow = 0;
+			int nCol = 0;
+			Piece piece;
+
+			// Team pieces.
+			// First row - Black - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
+			piece = new Rook( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Knight( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Bishop( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Queen( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new King( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Bishop( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Knight( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+			++nCol;
+			piece = new Rook( nRow, nCol, BLACK, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecBlackPieces.Add( piece );
+
+			// Second row - Black - Pawns
+			++nRow;
+			for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
+			{
+				piece = new Pawn( nRow, nCol, BLACK, this );
+				m_table[ nRow, nCol ].Piece = piece;
+				m_vecBlackPieces.Add( piece );
+			}
+
+			// Third to sixth rows - Empty
+			piece = null;
+			for( nRow = 2; nRow < 6; nRow++ )
+			{
+				for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
+				{
+					m_table[ nRow, nCol ].Piece = null;
+				}
+			}
+
+			// Seventh row - White - Pawns
+			for( nCol = 0; nCol < TABLE_SIZE; ++nCol )
+			{
+				piece = new Pawn( nRow, nCol, WHITE, this );
+				m_table[ nRow, nCol ].Piece = piece;
+				m_vecWhitePieces.Add( piece );
+			}
+
+			nRow++;
+			nCol = 0;
+
+			// Last row - White - Rook, Knight, Bishop, Queen, King, Bishop, Knight, Rook
+			piece = new Rook( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Knight( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Bishop( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Queen( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new King( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Bishop( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Knight( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+			++nCol;
+			piece = new Rook( nRow, nCol, WHITE, this );
+			m_table[ nRow, nCol ].Piece = piece;
+			m_vecWhitePieces.Add( piece );
+		}
 
 
         #region ICloneable Members

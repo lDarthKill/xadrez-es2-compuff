@@ -57,187 +57,177 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Texture\Abertura.png">
+    <Compile Include="Textures\Abertura.png">
       <Name>Abertura</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black bishop.png">
+    <Compile Include="Textures\black bishop.png">
       <Name>black bishop</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black king.png">
+    <Compile Include="Textures\black king.png">
       <Name>black king</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black knight.png">
+    <Compile Include="Textures\black knight.png">
       <Name>black knight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black pawn.png">
+    <Compile Include="Textures\black pawn.png">
       <Name>black pawn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black queen.png">
+    <Compile Include="Textures\black queen.png">
       <Name>black queen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\black rook.png">
+    <Compile Include="Textures\black rook.png">
       <Name>black rook</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\BotãoBranco.png">
+    <Compile Include="Textures\BotãoBranco.png">
       <Name>BotãoBranco</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\BotãoMarrom.png">
+    <Compile Include="Textures\BotãoMarrom.png">
       <Name>BotãoMarrom</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown bishop.png">
+    <Compile Include="Textures\brown bishop.png">
       <Name>brown bishop</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown king.png">
+    <Compile Include="Textures\brown king.png">
       <Name>brown king</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown knight.png">
+    <Compile Include="Textures\brown knight.png">
       <Name>brown knight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown pawn.png">
+    <Compile Include="Textures\brown pawn.png">
       <Name>brown pawn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown queen.png">
+    <Compile Include="Textures\brown queen.png">
       <Name>brown queen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\brown rook.png">
+    <Compile Include="Textures\brown rook.png">
       <Name>brown rook</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown bishop.png">
+    <Compile Include="Textures\light_brown bishop.png">
       <Name>light_brown bishop</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown king.png">
+    <Compile Include="Textures\light_brown king.png">
       <Name>light_brown king</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown knight.png">
+    <Compile Include="Textures\light_brown knight.png">
       <Name>light_brown knight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown pawn.png">
+    <Compile Include="Textures\light_brown pawn.png">
       <Name>light_brown pawn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown queen.png">
+    <Compile Include="Textures\light_brown queen.png">
       <Name>light_brown queen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\light_brown rook.png">
+    <Compile Include="Textures\light_brown rook.png">
       <Name>light_brown rook</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\PlayerNow.png">
+    <Compile Include="Textures\PlayerNow.png">
       <Name>PlayerNow</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\Selection.png">
+    <Compile Include="Textures\Selection.png">
       <Name>Selection</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\Selection2.png">
+    <Compile Include="Textures\Selection2.png">
       <Name>Selection2</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\Selection3.png">
+    <Compile Include="Textures\Selection3.png">
       <Name>Selection3</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\table - Cópia.png">
-      <Name>table - Cópia</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Texture\table.png">
+    <Compile Include="Textures\table.png">
       <Name>table</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\targetSelections.png">
+    <Compile Include="Textures\targetSelections.png">
       <Name>targetSelections</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white bishop.png">
+    <Compile Include="Textures\white bishop.png">
       <Name>white bishop</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white king - Cópia.png">
-      <Name>white king - Cópia</Name>
-      <Importer>TextureImporter</Importer>
-      <Processor>TextureProcessor</Processor>
-    </Compile>
-    <Compile Include="Texture\white king.png">
+    <Compile Include="Textures\white king.png">
       <Name>white king</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white knight.png">
+    <Compile Include="Textures\white knight.png">
       <Name>white knight</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white pawn.png">
+    <Compile Include="Textures\white pawn.png">
       <Name>white pawn</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white queen.png">
+    <Compile Include="Textures\white queen.png">
       <Name>white queen</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\white rook.png">
+    <Compile Include="Textures\white rook.png">
       <Name>white rook</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\Winner Brown.png">
+    <Compile Include="Textures\Winner Brown.png">
       <Name>Winner Brown</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
     </Compile>
-    <Compile Include="Texture\Winner White.png">
+    <Compile Include="Textures\Winner White.png">
       <Name>Winner White</Name>
       <Importer>TextureImporter</Importer>
       <Processor>TextureProcessor</Processor>
