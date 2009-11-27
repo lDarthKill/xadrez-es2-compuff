@@ -612,6 +612,15 @@ namespace Xadrez
 			else
 			{
 				Window.Title = "Xadrez G5";
+				
+				//if( m_gameTable.Check )
+				//{
+				//    Window.Title = "Xadrez G5 - Check!";
+				//}
+				//else
+				//{
+				//    Window.Title = "Xadrez G5";
+				//}
 			}
 
             m_spriteBatch.End();

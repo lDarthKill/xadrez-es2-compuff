@@ -88,7 +88,7 @@ namespace Xadrez
 		private List< Piece >     m_vecWhitePieces;
 		private List< Piece >     m_vecDeadWhitePieces;
 
-		private bool			  m_bCheck;
+		//private bool			  m_bCheck;
 		private bool			  m_bCheckMate;
 
 		private bool			  m_bVerifyCheck;
@@ -101,7 +101,7 @@ namespace Xadrez
 			m_vecWhitePieces = new List<Piece>( );
             m_vecDeadWhitePieces = new List<Piece>( );
 
-			m_bCheck = false;
+			//m_bCheck = false;
 			m_bCheckMate = false;
 			m_bVerifyCheck = true;
 
@@ -409,6 +409,8 @@ namespace Xadrez
 
 		public void calculateBlackPiecesPosition( bool _bVerifyCheck )
 		{
+			//m_bCheck = false;
+
 			for( int i = 0; i < m_vecBlackPieces.Count; i++ )
 			{
 				m_vecBlackPieces[ i ].calculatePossiblePositions( _bVerifyCheck );
@@ -417,6 +419,8 @@ namespace Xadrez
 
 		public void calculateWhitePiecesPosition( bool _bVerifyCheck )
 		{
+			//m_bCheck = false;
+
 			for( int i = 0; i < m_vecWhitePieces.Count; i++ )
 			{
 				m_vecWhitePieces[ i ].calculatePossiblePositions( _bVerifyCheck );
@@ -511,20 +515,20 @@ namespace Xadrez
 			}
 		}
 
-		public
-		bool
-		Check
-		{
-			get
-			{
-				return m_bCheck;
-			}
+		//public
+		//bool
+		//Check
+		//{
+		//    get
+		//    {
+		//        return m_bCheck;
+		//    }
 
-			set
-			{
-				m_bCheck = value;
-			}
-		}
+		//    set
+		//    {
+		//        m_bCheck = value;
+		//    }
+		//}
 
 		public
 		bool
@@ -587,7 +591,7 @@ namespace Xadrez
 			m_vecWhitePieces = new List<Piece>( );
 			m_vecDeadWhitePieces = new List<Piece>( );
 
-			m_bCheck = false;
+			//m_bCheck = false;
 			m_bCheckMate = false;
 			m_bVerifyCheck = true;
 
