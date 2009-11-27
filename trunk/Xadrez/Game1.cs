@@ -206,44 +206,44 @@ namespace Xadrez
             //m_imgBlackWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner Brown.png");
             //m_imgWhiteWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner White.png");
 
-            Table.SetSelfImage(Content.Load<Texture2D>("Texture//table"));
+            Table.SetSelfImage(Content.Load<Texture2D>("Textures//table"));
 
             //Loading black and white pieces (on temporary instances - but the images are static)
             Pawn pawn = new Pawn(0,0,false,null);
-            pawn.SelfImageWhite = Content.Load<Texture2D>("Texture//white pawn");
-            pawn.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown pawn");
+            pawn.SelfImageWhite = Content.Load<Texture2D>("Textures//white pawn");
+            pawn.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown pawn");
 
             Knight knight = new Knight(0,0,false,null);
-            knight.SelfImageWhite = Content.Load<Texture2D>("Texture//white knight");
-            knight.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown knight");
+            knight.SelfImageWhite = Content.Load<Texture2D>("Textures//white knight");
+            knight.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown knight");
 
             Bishop bishop = new Bishop(0,0,false,null);
-            bishop.SelfImageWhite = Content.Load<Texture2D>("Texture//white bishop");
-            bishop.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown bishop");
+            bishop.SelfImageWhite = Content.Load<Texture2D>("Textures//white bishop");
+            bishop.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown bishop");
 
             Rook rook = new Rook(0,0,false,null);
-            rook.SelfImageWhite = Content.Load<Texture2D>("Texture//white rook");
-            rook.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown rook");
+            rook.SelfImageWhite = Content.Load<Texture2D>("Textures//white rook");
+            rook.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown rook");
 
             King king = new King(0,0,false,null);
-            king.SelfImageWhite = Content.Load<Texture2D>("Texture//white king");
-            king.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown king");
+            king.SelfImageWhite = Content.Load<Texture2D>("Textures//white king");
+            king.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown king");
 
             Queen queen = new Queen(0,0,false,null);
-            queen.SelfImageWhite = Content.Load<Texture2D>("Texture//white queen");
-            queen.SelfImageBlack = Content.Load<Texture2D>("Texture//light_brown queen");
+            queen.SelfImageWhite = Content.Load<Texture2D>("Textures//white queen");
+            queen.SelfImageBlack = Content.Load<Texture2D>("Textures//light_brown queen");
 
-            m_maskSelection = Content.Load<Texture2D>("Texture//selection3");
-            m_maskSelectionTarget = Content.Load<Texture2D>("Texture//targetSelections");
+            m_maskSelection = Content.Load<Texture2D>("Textures//selection3");
+            m_maskSelectionTarget = Content.Load<Texture2D>("Textures//targetSelections");
 
-            m_imgPlayNow = Content.Load<Texture2D>("Texture//PlayerNow");
+            m_imgPlayNow = Content.Load<Texture2D>("Textures//PlayerNow");
 
-            m_imgWhiteButton = Content.Load<Texture2D>("Texture//BotãoBranco");
-            m_imgBlackButton = Content.Load<Texture2D>("Texture//BotãoMarrom");
+            m_imgWhiteButton = Content.Load<Texture2D>("Textures//BotãoBranco");
+            m_imgBlackButton = Content.Load<Texture2D>("Textures//BotãoMarrom");
 
-            m_imgOpenGame = Content.Load<Texture2D>("Texture//Abertura");
-            m_imgBlackWinner = Content.Load<Texture2D>("Texture//Winner Brown");
-            m_imgWhiteWinner = Content.Load<Texture2D>("Texture//Winner White");
+            m_imgOpenGame = Content.Load<Texture2D>("Textures//Abertura");
+            m_imgBlackWinner = Content.Load<Texture2D>("Textures//Winner Brown");
+            m_imgWhiteWinner = Content.Load<Texture2D>("Textures//Winner White");
 
             
 
@@ -610,88 +610,9 @@ namespace Xadrez
 
         protected void ResetGame()
         {
-
-            m_spriteBatch.Draw(m_gameTable.getTableSquare(0, 0).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 0).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 1 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 1).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 2 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 2).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 3 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 3).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 4 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(5, 4).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 5 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 5).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 6 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 6).BoundingBox
-                                , Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 0, 7 ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(0, 7).BoundingBox,
-                                Color.Beige);
-
-            for (int j = 0; j <= 7; j++ )
-            {
-				m_spriteBatch.Draw( m_gameTable.getTableSquare( 1, j ).Piece.SelfImageBlack,
-                                m_gameTable.getTableSquare(1, j).BoundingBox,
-                                Color.Beige);
-            }
-
-
-            for (int j = 0; j <= 7; j++)
-            {
-				m_spriteBatch.Draw( m_gameTable.getTableSquare( 6, j ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(6, j).BoundingBox,
-                                Color.Beige);
-            }
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 0 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 0).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 1 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 1).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 2 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 2).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 3 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 3).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 4 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 4).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 5 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 5).BoundingBox,
-                                Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 6 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 6).BoundingBox
-                                , Color.Beige);
-
-			m_spriteBatch.Draw( m_gameTable.getTableSquare( 7, 7 ).Piece.SelfImageWhite,
-                                m_gameTable.getTableSquare(7, 7).BoundingBox,
-                                Color.Beige);
-
-            
-
+			m_gameTable.resetTable( );
+			m_gameTable.calculateWhitePiecesPosition( false );
+			m_playTurn = Play_Turn.White_Turn;
         }
 
         protected void DrawTargets()
