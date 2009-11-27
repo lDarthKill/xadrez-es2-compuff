@@ -48,6 +48,10 @@ namespace Xadrez
 				{
 					m_vetPossibleMovements.Add( newPosition );
 				}
+				else
+				{
+					m_parentTable.Check = true;
+				}
 
 				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
@@ -71,6 +75,10 @@ namespace Xadrez
 				{
 					m_vetPossibleMovements.Add( newPosition );
 				}
+				else
+				{
+					m_parentTable.Check = true;
+				}
 
 				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
@@ -93,6 +101,10 @@ namespace Xadrez
 				{
 					m_vetPossibleMovements.Add( newPosition );
 				}
+				else
+				{
+					m_parentTable.Check = true;
+				}
 
 				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
 				{
@@ -114,6 +126,10 @@ namespace Xadrez
 				if( !_bVerifyCheck || ( isValidMove( newPosition ) && _bVerifyCheck ) )
 				{
 					m_vetPossibleMovements.Add( newPosition );
+				}
+				else
+				{
+					m_parentTable.Check = true;
 				}
 
 				if( ( friend != null ) && ( friend.isBlack != m_bBlack ) )
