@@ -21,6 +21,13 @@ namespace Xadrez
     public class Game1 : Microsoft.Xna.Framework.Game
     {
 
+        enum SPLASH_STATES
+        {
+            OPEN,
+            WINNER_WHITE,
+            WINNER_BLACK
+        }
+
         GraphicsDeviceManager       m_graphics;
 
         SpriteBatch                 m_spriteBatch;
@@ -34,12 +41,16 @@ namespace Xadrez
         Texture2D                   m_imgWhiteButton;
         Texture2D                   m_imgBlackButton;
         Texture2D                   m_imgOpenGame;
+        Texture2D                   m_imgBlackWinner;
+        Texture2D                   m_imgWhiteWinner;
+
 
         private Rectangle [ ]       m_DeadBlackSpaces;
         private Rectangle [ ]       m_DeadWhiteSpaces;
         private Rectangle           m_rectPlayNow;
         private Rectangle           m_rectButton;
-        private Rectangle           m_rectOpenGame;
+        private Rectangle           m_rectSplashScreens;
+       
 
         private List<Point>         m_listTargetsMovements;
         bool                        m_bResetGame;
@@ -54,6 +65,7 @@ namespace Xadrez
         int m_updateCounts;
         bool m_bCanBePressed;
         bool m_bInitGame;
+        SPLASH_STATES m_stateSplash;
 
 
 
@@ -99,8 +111,11 @@ namespace Xadrez
             m_bResetGame = true;
             m_bInitGame = false;
 
+
             m_bCanBePressed = false;
             m_updateCounts = 0;
+
+            m_stateSplash = SPLASH_STATES.OPEN;
 
             m_playTurn = Play_Turn.White_Turn;
             m_bPlayerBlackCPU = true;
@@ -126,10 +141,10 @@ namespace Xadrez
             m_rectButton.Y = ((m_rectPlayNow.Y + m_rectPlayNow.Height) + 4);
 
 
-            m_rectOpenGame.Height = 300;
-            m_rectOpenGame.Width = 400;
-            m_rectOpenGame.X = (m_rectTable.Width / 2) - (m_rectOpenGame.Width/2);
-            m_rectOpenGame.Y = (m_rectTable.Height / 2) - (m_rectOpenGame.Height / 2);
+            m_rectSplashScreens.Height = 300;
+            m_rectSplashScreens.Width = 400;
+            m_rectSplashScreens.X = (m_rectTable.Width / 2) - (m_rectSplashScreens.Width / 2);
+            m_rectSplashScreens.Y = (m_rectTable.Height / 2) - (m_rectSplashScreens.Height / 2);
             
         }
 
@@ -188,6 +203,8 @@ namespace Xadrez
             m_imgBlackButton = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/BotãoMarrom.png");
 
             m_imgOpenGame = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Abertura.png");
+            m_imgBlackWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner Brown.png");
+            m_imgWhiteWinner = Texture2D.FromFile(m_graphics.GraphicsDevice, "../../../Content/Textures/Winner White.png");
 
 			m_soundKlik = Content.Load<SoundEffect>( "Sounds\\KLICK" );
 			m_soundKill = Content.Load<SoundEffect>( "Sounds\\BEEP_FM" );
@@ -220,6 +237,8 @@ namespace Xadrez
             {
                 m_bInitGame = true;
                 m_bCanBePressed = true;
+                m_bResetGame = true;
+                return;
             }
 
             if(!m_bInitGame)
@@ -251,6 +270,7 @@ namespace Xadrez
 				if( m_gameTable.CheckMate )
 				{
 					m_bInitGame = false;
+                    m_stateSplash = SPLASH_STATES.WINNER_WHITE;
 				}
 				else
 				{
@@ -272,6 +292,7 @@ namespace Xadrez
 				if( m_gameTable.CheckMate )
 				{
 					m_bInitGame = false;
+                    m_stateSplash = SPLASH_STATES.WINNER_BLACK;
 				}
 				else
 				{
@@ -307,6 +328,12 @@ namespace Xadrez
 					if( m_gameTable.CheckMate )
 					{
 						m_bInitGame = false;
+
+                        if (m_playTurn == Play_Turn.Black_Turn)
+                            m_stateSplash = SPLASH_STATES.WINNER_BLACK;
+                        else
+                            m_stateSplash = SPLASH_STATES.WINNER_WHITE;
+
 					}
 					else
 					{
@@ -424,15 +451,39 @@ namespace Xadrez
             {
                 m_spriteBatch.Draw(Table.GetSelfImage(), m_rectTable, Color.Beige);
 
-                if (!m_bInitGame)
-                {
-                    m_spriteBatch.Draw(m_imgOpenGame,
-                                      m_rectOpenGame,
-                                      Color.Beige);
+                //if (!m_bInitGame)
+                //{
+                //    switch(m_stateSplash)
+                //    {
+                //        case SPLASH_STATES.OPEN:
+                //            {
+                //                m_spriteBatch.Draw(m_imgOpenGame,
+                //                                  m_rectSplashScreens,
+                //                                  Color.Beige);
+                //            }
+                //            break;
 
-                    m_spriteBatch.End();
-                    return;
-                }
+                //        case SPLASH_STATES.WINNER_BLACK:
+                //            {
+                //                m_spriteBatch.Draw(m_imgBlackWinner,
+                //                                  m_rectSplashScreens,
+                //                                  Color.Beige);
+                //            }
+                //            break;
+
+                //        case SPLASH_STATES.WINNER_WHITE:
+                //            {
+                //                m_spriteBatch.Draw(m_imgWhiteWinner,
+                //                                  m_rectSplashScreens,
+                //                                  Color.Beige);
+                //            }
+                //            break;
+
+                //    }
+
+                //    //m_spriteBatch.End();
+                //    //return;
+                //}
 
                 if (m_bResetGame)
                 {
@@ -474,10 +525,43 @@ namespace Xadrez
 
 
                                    
-                
-
-                               
+                    
             }
+
+            if (!m_bInitGame)
+            {
+                switch (m_stateSplash)
+                {
+                    case SPLASH_STATES.OPEN:
+                        {
+                            m_spriteBatch.Draw(m_imgOpenGame,
+                                              m_rectSplashScreens,
+                                              Color.Beige);
+                        }
+                        break;
+
+                    case SPLASH_STATES.WINNER_BLACK:
+                        {
+                            m_spriteBatch.Draw(m_imgBlackWinner,
+                                              m_rectSplashScreens,
+                                              Color.Beige);
+                        }
+                        break;
+
+                    case SPLASH_STATES.WINNER_WHITE:
+                        {
+                            m_spriteBatch.Draw(m_imgWhiteWinner,
+                                              m_rectSplashScreens,
+                                              Color.Beige);
+                        }
+                        break;
+
+                }
+
+                //m_spriteBatch.End();
+                //return;
+            }
+
             m_spriteBatch.End();
 
             base.Draw(gameTime);
