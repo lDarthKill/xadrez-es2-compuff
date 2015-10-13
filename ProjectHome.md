@@ -1,0 +1,1 @@
+Jogo de xadrez sendo desenvolvido por alunos da disciplina de Engenharia de software 2, da UFF.
